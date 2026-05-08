@@ -1,0 +1,49 @@
+:root {
+  --bg-main: #F8F9FA;             /* Główne tło aplikacji */
+  --bg-sidebar: #F8FAFC;          /* Tło lewego paska nawigacji */
+  --bg-card: #FFFFFF;             /* Tła białych kontenerów */
+  --bg-secondary: #F3F4F5;        /* Tło inputów, szarych kontenerów i profilu usera */
+
+  --shadow-default: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Cień domyslny */
+
+  --text-primary: #191C1D;        /* Główne nagłówki, kwoty, mocny tekst */
+  --text-secondary: #737785;      /* Etykiety, opisy, wygaszony tekst */
+  --text-sidebar: #475569;        /* Tekst nieaktywnych linków w menu */
+  --text-sidebar-muted: #64748B;  /* Bardzo jasny tekst pod nazwiskiem w sidebarze */
+  --text-white: #FFFFFF;          /* Tekst na ciemnych przyciskach */
+  --text-link: var(--primary-blue); /* Kolor linków */
+  --text-form: #424654;
+
+  --primary-blue: #0040A1;        /* Główny niebieski (ikony, mocne akcenty, gradient start) */
+  --primary-blue-light: #0056D2;  /* Jasny niebieski (gradient end dla głównego przycisku) */
+  --active-menu-text: #1D4ED8;    /* Tekst/ikona aktywnej zakładki */
+  --active-menu-bg: #EFF6FF;      /* Tło aktywnej zakładki w menu */
+  
+  --danger-main: #BA1A1A;         /* Czerwony (Wyloguj, ikona ogrzewania) */
+  --danger-bg-primary: #812800;   /* Ciemnopomarańczowe tło*/
+  --icon-bg-blue: #DAE2FF;        /* Jasnoniebieskie tło pod ikonami głównymi */
+  --icon-bg-orange: #FFDBCF;      /* Jasnopomarańczowe tło pod ikoną Historii */
+  --icon-orange-dark: #812800;    /* Ciemnopomarańczowa ikona */
+  --icon-blue-muted: #4A5D8E;     /* Zgaszony granatowy */
+  --icon-bg-blue-transparent: rgba(0, 64, 161, 0.1);
+
+  --border-default: #E1E3E4;      /* Standardowe ramki kontenerów i podziały */
+  --border-active: #0040A1;       /* Aktywna ramka wybranej metody płatności */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-main: #121416;
+    --bg-card: #1A1C1E;
+    --bg-secondary: #333537;
+
+    --shadow-default: none;
+
+    --text-primary: #FFFFFF;
+    --text-form: #C2C6D5;
+    --text-secondary: rgba(194, 198, 213, 0.5); 
+    --text-link: #ACC7FF;
+
+    --border-default: #424654;
+  }
+}
