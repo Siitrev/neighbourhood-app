@@ -186,7 +186,7 @@
 }
 
 .support-icon {
-  color: var(--primary-blue);
+  color: var(--text-link);
   width: 20px;
   height: 20px;
 }
