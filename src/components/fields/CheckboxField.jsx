@@ -8,6 +8,7 @@ export default function CheckboxField({
   onChange,
   label,
   labelledById,
+  describedById,
   variant = 'default'
 }) {
   const labelId = labelledById || (id ? `${id}-label` : undefined);
@@ -22,6 +23,7 @@ export default function CheckboxField({
         checked={checked}
         onChange={onChange}
         aria-labelledby={labelId}
+        aria-describedby={describedById}
       />
       {label ? (
         <label id={labelId} htmlFor={id} className="checkbox-label">
