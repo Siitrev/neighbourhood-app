@@ -69,56 +69,6 @@
   border-radius: 4px;
 }
 
-/* --- CHECKBOX --- */
-.checkbox-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.checkbox-input {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  background: var(--border-default);
-  border-radius: 4px;
-  display: grid;
-  place-content: center;
-}
-
-.checkbox-input::after {
-  content: '';
-  width: 10px;
-  height: 6px;
-  border: 2px solid transparent;
-  border-right-color: var(--text-white);
-  border-bottom-color: var(--text-white);
-  transform: rotate(45deg);
-  margin-top: -1px;
-  opacity: 0;
-}
-
-.checkbox-input:checked {
-  background: var(--primary-blue);
-}
-
-.checkbox-input:checked::after {
-  opacity: 1;
-}
-
-.checkbox-input:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-}
-
-.checkbox-label {
-  font-size: 14px;
-  color: var(--text-form);
-  cursor: pointer;
-}
-
 /* --- PRZYCISK --- */
 .btn-submit {
   height: 60px;
@@ -151,10 +101,4 @@
   letter-spacing: 1.2px;
   text-transform: uppercase;
   text-align: center;
-}
-
-@media (prefers-color-scheme: dark) {
-  .checkbox-input {
-    background: var(--bg-secondary);
-  }
 }

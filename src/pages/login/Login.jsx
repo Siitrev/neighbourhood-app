@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { EmailField, PasswordField } from '../../components/auth';
+import { EmailField, PasswordField, CheckboxField } from '../../components/auth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -72,18 +72,12 @@ export default function Login() {
           }
         />
 
-        <div className="checkbox-group">
-          <input 
-            type="checkbox" 
-            id="rememberMe" 
-            className="checkbox-input"
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-          />
-          <label htmlFor="rememberMe" className="checkbox-label">
-            Zapamiętaj mnie na tym urządzeniu
-          </label>
-        </div>
+        <CheckboxField
+          id="rememberMe"
+          checked={rememberMe}
+          onChange={(e) => setRememberMe(e.target.checked)}
+          label="Zapamiętaj mnie na tym urządzeniu"
+        />
 
         <button type="submit" className="btn-submit">
           Zaloguj się

@@ -1,0 +1,61 @@
+/* Shared checkbox styles (extracted from Login) */
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-group--terms {
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.checkbox-input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--border-default);
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+}
+
+.checkbox-input::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border-right: 2px solid var(--text-white);
+  border-bottom: 2px solid var(--text-white);
+  transform: rotate(45deg);
+  margin-top: -3px;
+  opacity: 0;
+}
+
+.checkbox-input:checked {
+  background: var(--primary-blue);
+}
+
+.checkbox-input:checked::after {
+  opacity: 1;
+}
+
+.checkbox-input:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: var(--text-form);
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .checkbox-input {
+    background: var(--bg-secondary);
+  }
+}
