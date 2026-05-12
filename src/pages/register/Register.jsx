@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Register.css';
 import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/fields';
 import { TermsLabel } from './TermsLabel';
