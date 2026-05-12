@@ -61,13 +61,17 @@
 }
 
 .input-label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
   color: var(--text-form);
 }
 
 .forgot-password {
   font-size: 12px;
+  line-height: 16px;
   color: var(--text-link);
   text-decoration: none;
 }
@@ -85,23 +89,49 @@
 .input-icon {
   position: absolute;
   left: 16px;
-  color: var(--text-form);
+  color: var(--text-secondary);
   width: 20px;
   height: 20px;
 }
 
 .login-input {
   width: 100%;
-  height: 55px;
+  min-height: 49px;
   background: var(--bg-secondary);
-  border: 1px solid transparent;
+  border: 1px solid var(--border-default);
   border-radius: 8px;
-  padding: 0 16px 0 48px;
+  padding: 16px 16px 16px 48px;
   font-size: 16px;
+  line-height: 19px;
   color: var(--text-primary);
   box-sizing: border-box;
   outline: none;
   transition: border-color 0.2s;
+}
+
+.login-input.with-right-icon {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.password-toggle svg {
+  display: block;
 }
 
 .login-input:focus {
@@ -123,7 +153,32 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: var(--primary-blue);
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--border-default);
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+}
+
+.checkbox-input::after {
+  content: '';
+  width: 10px;
+  height: 6px;
+  border: 2px solid transparent;
+  border-right-color: var(--text-white);
+  border-bottom-color: var(--text-white);
+  transform: rotate(45deg);
+  margin-top: -1px;
+  opacity: 0;
+}
+
+.checkbox-input:checked {
+  background: var(--primary-blue);
+}
+
+.checkbox-input:checked::after {
+  opacity: 1;
 }
 
 .checkbox-label {
@@ -135,7 +190,7 @@
 /* --- PRZYCISK --- */
 .btn-submit {
   height: 60px;
-  background: linear-gradient(98.93deg, var(--primary-blue-light) 0%, var(--primary-blue) 100%);
+  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
   box-shadow: var(--shadow-default);
   border-radius: 8px;
   border: none;
@@ -158,51 +213,19 @@
   color: var(--text-secondary);
   letter-spacing: 1.2px;
   text-transform: uppercase;
+  text-align: center;
 }
 
-/* --- WIDŻET POMOCY (Prawy dolny róg) --- */
-.support-widget {
-  position: absolute;
-  right: 48px;
-  bottom: 48px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: var(--shadow-default);
-}
+@media (prefers-color-scheme: dark) {
+  .input-icon {
+    color: var(--text-form);
+  }
 
-.support-icon-bg {
-  width: 40px;
-  height: 40px;
-  background: var(--icon-bg-blue-transparent);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .password-toggle {
+    color: var(--text-form);
+  }
 
-.support-icon {
-  color: var(--primary-blue);
-  width: 20px;
-  height: 20px;
-}
-
-.support-text-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-.support-title {
-  font-size: 12px;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.support-desc {
-  font-size: 11px;
-  color: var(--text-form);
+  .checkbox-input {
+    background: var(--bg-secondary);
+  }
 }
