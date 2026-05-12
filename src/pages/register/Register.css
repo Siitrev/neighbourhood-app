@@ -145,48 +145,7 @@
 }
 
 .terms-link {
-  appearance: none;
-  background: none;
-  border: 0;
-  padding: 0;
-  color: var(--text-link);
   text-decoration: underline;
-  font: inherit;
-  cursor: pointer;
-}
-
-.terms-link:hover {
-  text-decoration: underline;
-}
-
-.terms-link:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-}
-
-/* --- PRZYCISK --- */
-.btn-register {
-  height: 49px;
-  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
-  box-shadow: var(--shadow-default);
-  border-radius: 12px;
-  border: none;
-  color: var(--text-white);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  margin-top: 8px;
-  width: 100%;
-}
-
-.btn-register:hover {
-  opacity: 0.9;
-}
-
-.btn-register:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
 }
 
 /* --- LINK DO LOGOWANIA --- */
@@ -202,21 +161,6 @@
 
 .login-link-text {
   color: var(--text-form);
-}
-
-.login-link-action {
-  color: var(--text-link);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.login-link-action:hover {
-  text-decoration: underline;
-}
-
-.login-link-action:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
 }
 
 /* --- STOPKA --- */

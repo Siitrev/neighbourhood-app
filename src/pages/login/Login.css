@@ -50,47 +50,6 @@
 .forgot-password {
   font-size: 12px;
   line-height: 16px;
-  color: var(--text-link);
-  text-decoration: none;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.forgot-password:hover {
-  text-decoration: underline;
-}
-
-.forgot-password:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* --- PRZYCISK --- */
-.btn-submit {
-  height: 60px;
-  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
-  box-shadow: var(--shadow-default);
-  border-radius: 8px;
-  border: none;
-  color: var(--text-white);
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  margin-top: 8px;
-}
-
-.btn-submit:hover {
-  opacity: 0.9;
-}
-
-.btn-submit:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
 }
 
 /* --- STOPKA --- */

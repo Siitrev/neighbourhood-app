@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { EmailField, PasswordField, CheckboxField } from '../../components/auth';
+import { Button, LinkButton } from '../../components/buttons';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -60,15 +61,14 @@ export default function Login() {
           autoComplete="current-password"
           required
           labelRight={
-            <button
-              type="button"
+            <LinkButton
               className="forgot-password"
               onClick={() =>
                 alert('Opcja odzyskiwania hasła nie jest jeszcze dostępna.')
               }
             >
               Nie pamiętasz hasła?
-            </button>
+            </LinkButton>
           }
         />
 
@@ -79,9 +79,9 @@ export default function Login() {
           label="Zapamiętaj mnie na tym urządzeniu"
         />
 
-        <button type="submit" className="btn-submit">
+        <Button type="submit">
           Zaloguj się
-        </button>
+        </Button>
 
       </form>
 

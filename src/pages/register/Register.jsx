@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './Register.css';
 import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/auth';
+import { Button, LinkButton } from '../../components/buttons';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -136,35 +137,33 @@ export default function Register() {
               label={
                 <span className="terms-text">
                   Akceptuję{' '}
-                  <button
-                    type="button"
+                  <LinkButton
                     className="terms-link"
                     onClick={() => alert('Regulamin nie jest jeszcze dostępny w aplikacji.')}
                   >
                     Regulamin
-                  </button>{' '}
+                  </LinkButton>{' '}
                   oraz{' '}
-                  <button
-                    type="button"
+                  <LinkButton
                     className="terms-link"
                     onClick={() =>
                       alert('Polityka Prywatności nie jest jeszcze dostępna w aplikacji.')
                     }
                   >
                     Politykę Prywatności
-                  </button>{' '}
+                  </LinkButton>{' '}
                   platformy Neighbourhood.
                 </span>
               }
             />
 
-            <button type="submit" className="btn-register">
+            <Button type="submit">
               Zarejestruj się
-            </button>
+            </Button>
 
             <div className="login-link-container">
               <span className="login-link-text">Masz już konto?</span>
-              <Link to="/login" className="login-link-action">Zaloguj się</Link>
+              <LinkButton to="/login">Zaloguj się</LinkButton>
             </div>
           </form>
 
