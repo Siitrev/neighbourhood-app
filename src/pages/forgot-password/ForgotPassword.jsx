@@ -3,6 +3,7 @@ import './ForgotPassword.css';
 import { EmailField } from '../../components/fields';
 import { Button, LinkButton } from '../../components/buttons';
 import { CheckIcon } from '../../components/icons';
+import { AuthFooter } from '../../components/footer';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -62,9 +63,7 @@ export default function ForgotPassword() {
         </div>
       </div>
 
-      <div className="recovery-footer">
-        NEIGHBOURHOOD SYSTEM © 2026
-      </div>
+      <AuthFooter />
     </div>
   );
 }

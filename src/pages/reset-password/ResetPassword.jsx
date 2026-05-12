@@ -4,6 +4,7 @@ import './ResetPassword.css';
 import { PasswordField } from '../../components/fields';
 import { Button } from '../../components/buttons';
 import { CheckIcon } from '../../components/icons';
+import { AuthFooter } from '../../components/footer';
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -99,9 +100,7 @@ export default function ResetPassword() {
         )}
       </div>
 
-      <div className="reset-footer">
-        NEIGHBOURHOOD SYSTEM © 2026
-      </div>
+      <AuthFooter />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { EmailField, PasswordField, CheckboxField } from '../../components/fields';
 import { Button, LinkButton } from '../../components/buttons';
+import { AuthFooter } from '../../components/footer';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function Login() {
     <div className="login-page">
       
       <div className="login-header">
-        <img src="/logo.svg" alt="Neighbourhood" className="login-logo" />
+          <img src="/logo.svg" alt="Neighbourhood" className="login-logo" />
         <h2 className="login-subtitle">
           Witaj ponownie. Zaloguj się do swojego panelu mieszkańca.
         </h2>
@@ -83,9 +84,7 @@ export default function Login() {
 
       </form>
 
-      <div className="login-footer">
-        OBSŁUGIWANE PRZEZ NEIGHBOURHOOD SYSTEM © 2026
-      </div>
+      <AuthFooter />
     </div>
   );
 }
