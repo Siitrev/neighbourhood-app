@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 import { EmailField, PasswordField, CheckboxField } from '../../components/fields';
 import { Button, LinkButton } from '../../components/buttons';
@@ -63,9 +63,7 @@ export default function Login() {
           labelRight={
             <LinkButton
               className="forgot-password"
-              onClick={() =>
-                alert('Opcja odzyskiwania hasła nie jest jeszcze dostępna.')
-              }
+              to="/forgot-password"
             >
               Nie pamiętasz hasła?
             </LinkButton>
