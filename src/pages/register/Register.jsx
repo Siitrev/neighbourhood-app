@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './Register.css';
 import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/auth';
+import { TermsLabel } from './TermsLabel';
 import { Button, LinkButton } from '../../components/buttons';
 
 export default function Register() {
@@ -134,27 +135,7 @@ export default function Register() {
               variant="terms"
               checked={termsAccepted}
               onChange={(e) => setTermsAccepted(e.target.checked)}
-              label={
-                <span className="terms-text">
-                  Akceptuję{' '}
-                  <LinkButton
-                    className="terms-link"
-                    onClick={() => alert('Regulamin nie jest jeszcze dostępny w aplikacji.')}
-                  >
-                    Regulamin
-                  </LinkButton>{' '}
-                  oraz{' '}
-                  <LinkButton
-                    className="terms-link"
-                    onClick={() =>
-                      alert('Polityka Prywatności nie jest jeszcze dostępna w aplikacji.')
-                    }
-                  >
-                    Politykę Prywatności
-                  </LinkButton>{' '}
-                  platformy Neighbourhood.
-                </span>
-              }
+              label={<TermsLabel />}
             />
 
             <Button type="submit">
