@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { EyeIcon, EyeOffIcon, LockIcon, MailIcon } from '../../components/icons';
+import { EmailField, PasswordField } from '../../components/auth';
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -40,61 +39,38 @@ export default function Login() {
       </div>
 
       <form className="login-card" onSubmit={handleLogin}>
-        <div className="input-group">
-          <label className="input-label" htmlFor="email">Email</label>
-          <div className="input-wrapper">
-            <MailIcon className="input-icon" />
-            <input 
-              id="email"
-              name="email"
-              type="email" 
-              className="login-input" 
-              placeholder="email@domena.pl"
-              autoComplete="username"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-        </div>
+        <EmailField
+          id="email"
+          name="email"
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="email@domena.pl"
+          autoComplete="username"
+          required
+        />
 
-        <div className="input-group">
-          <div className="label-row">
-            <label className="input-label" htmlFor="password">Hasło</label>
+        <PasswordField
+          id="password"
+          name="password"
+          label="Hasło"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+          autoComplete="current-password"
+          required
+          labelRight={
             <button
               type="button"
               className="forgot-password"
-              onClick={() => alert('Opcja odzyskiwania hasła nie jest jeszcze dostępna.')}
+              onClick={() =>
+                alert('Opcja odzyskiwania hasła nie jest jeszcze dostępna.')
+              }
             >
               Nie pamiętasz hasła?
             </button>
-          </div>
-          <div className="input-wrapper">
-            <LockIcon className="input-icon" />
-            <input 
-              id="password"
-              name="password"
-              type={showPassword ? 'text' : 'password'}
-              className="login-input with-right-icon" 
-              placeholder="••••••••"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            <button
-              type="button"
-              className="password-toggle"
-              onClick={() => setShowPassword((prev) => !prev)}
-              aria-label={showPassword ? 'Ukryj hasło' : 'Pokaż hasło'}
-              aria-pressed={showPassword}
-              aria-controls="password"
-            >
-              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-            </button>
-          </div>
-        </div>
+          }
+        />
 
         <div className="checkbox-group">
           <input 
