@@ -1,0 +1,10 @@
+.terms-text {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-form);
+  margin: 0;
+}
+
+.terms-link {
+  text-decoration: underline;
+}
