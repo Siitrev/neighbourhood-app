@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { EmailField, PasswordField, CheckboxField } from '../../components/auth';
+import { EmailField, PasswordField, CheckboxField } from '../../components/fields';
 import { Button, LinkButton } from '../../components/buttons';
 
 export default function Login() {
