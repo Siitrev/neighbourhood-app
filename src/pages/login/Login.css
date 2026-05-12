@@ -74,10 +74,21 @@
   line-height: 16px;
   color: var(--text-link);
   text-decoration: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .forgot-password:hover {
   text-decoration: underline;
+}
+
+.forgot-password:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .input-wrapper {
@@ -130,12 +141,23 @@
   cursor: pointer;
 }
 
+.password-toggle:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
 .password-toggle svg {
   display: block;
 }
 
 .login-input:focus {
   border-color: var(--primary-blue);
+}
+
+.login-input:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
 }
 
 .login-input::placeholder {
@@ -181,6 +203,11 @@
   opacity: 1;
 }
 
+.checkbox-input:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
 .checkbox-label {
   font-size: 14px;
   color: var(--text-form);
@@ -204,6 +231,11 @@
 
 .btn-submit:hover {
   opacity: 0.9;
+}
+
+.btn-submit:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
 }
 
 /* --- STOPKA --- */

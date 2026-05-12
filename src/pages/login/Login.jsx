@@ -47,9 +47,11 @@ export default function Login() {
             </svg>
             <input 
               id="email"
+              name="email"
               type="email" 
               className="login-input" 
               placeholder="email@domena.pl"
+              autoComplete="username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -60,7 +62,13 @@ export default function Login() {
         <div className="input-group">
           <div className="label-row">
             <label className="input-label" htmlFor="password">Hasło</label>
-            <a href="#" className="forgot-password">Nie pamiętasz hasła?</a>
+            <button
+              type="button"
+              className="forgot-password"
+              onClick={() => alert('Opcja odzyskiwania hasła nie jest jeszcze dostępna.')}
+            >
+              Nie pamiętasz hasła?
+            </button>
           </div>
           <div className="input-wrapper">
             <svg className="input-icon" width="16" height="21" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,9 +76,11 @@ export default function Login() {
             </svg>
             <input 
               id="password"
+              name="password"
               type={showPassword ? 'text' : 'password'}
               className="login-input with-right-icon" 
               placeholder="••••••••"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -82,6 +92,7 @@ export default function Login() {
               onClick={() => setShowPassword((prev) => !prev)}
               aria-label={showPassword ? 'Ukryj hasło' : 'Pokaż hasło'}
               aria-pressed={showPassword}
+              aria-controls="password"
             >
               {showPassword ? (
                 <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
