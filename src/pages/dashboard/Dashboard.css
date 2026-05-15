@@ -169,12 +169,12 @@
 
 /* MODYFIKATOR PRZYCISKU */
 .dashboard-action-btn {
-  width: 180px !important;    /* Wymuszamy 180px */
-  height: 44px !important;    /* Wymuszamy 44px */
-  min-height: 44px !important;
-  margin-top: 0 !important;   /* Usuwamy margin-top: 8px z bazy */
-  border-radius: 16px !important; /* Zaokrąglenie z Figmy */
-  flex-shrink: 0;             /* Blokuje zgniatanie */
+  width: 180px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  margin-top: 0 !important;
+  border-radius: 16px !important;
+  flex-shrink: 0;
   white-space: nowrap;
 }
 
