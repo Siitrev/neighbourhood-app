@@ -5,6 +5,7 @@ import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from 
 import { TermsLabel } from './TermsLabel';
 import { Button, LinkButton } from '../../components/buttons';
 import { AuthFooter } from '../../components/footer';
+import TermsModal from './TermsModal';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function Register() {
   });
   
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
+  const [termsError, setTermsError] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -31,13 +34,19 @@ export default function Register() {
     e.preventDefault();
     
     if (!termsAccepted) {
-      alert("Musisz zaakceptować regulamin, aby założyć konto.");
+      setTermsError('Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto.');
       return;
     }
 
     console.log("Rejestracja z tokenem:", token, "Dane:", formData);
 
     navigate('/login');
+  };
+
+  const closeModal = () => setActiveModal(null);
+
+  const openModal = (type) => {
+    setActiveModal(type);
   };
 
   return (
@@ -135,9 +144,24 @@ export default function Register() {
               id="terms"
               variant="terms"
               checked={termsAccepted}
-              onChange={(e) => setTermsAccepted(e.target.checked)}
-              label={<TermsLabel />}
+              onChange={(e) => {
+                setTermsAccepted(e.target.checked);
+                if (e.target.checked) setTermsError('');
+              }}
+              describedById={termsError ? 'terms-error' : undefined}
+              label={
+                <TermsLabel
+                  handleRegulations={() => openModal('regulations')}
+                  handlePrivacy={() => openModal('policy')}
+                />
+              }
             />
+
+            {termsError ? (
+              <p id="terms-error" className="register-error" role="alert">
+                {termsError}
+              </p>
+            ) : null}
 
             <Button type="submit">
               Zarejestruj się
@@ -151,6 +175,8 @@ export default function Register() {
 
           <AuthFooter />
         </div>
+
+        <TermsModal activeModal={activeModal} onClose={closeModal} />
 
       </div>
     </div>

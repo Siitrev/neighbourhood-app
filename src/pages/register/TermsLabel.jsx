@@ -2,22 +2,20 @@ import React from 'react';
 import { LinkButton } from '../../components/buttons';
 import './TermsLabel.css';
 
-export const TermsLabel = () => {
+export const TermsLabel = ({handleRegulations, handlePrivacy}) => {
   return (
     <span className="terms-text">
       Akceptuję{' '}
       <LinkButton
         className="terms-link"
-        onClick={() => alert('Regulamin nie jest jeszcze dostępny w aplikacji.')}
+        onClick={handleRegulations}
       >
         Regulamin
       </LinkButton>{' '}
       oraz{' '}
       <LinkButton
         className="terms-link"
-        onClick={() =>
-          alert('Polityka Prywatności nie jest jeszcze dostępna w aplikacji.')
-        }
+        onClick={handlePrivacy}
       >
         Politykę Prywatności
       </LinkButton>{' '}
