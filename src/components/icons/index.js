@@ -9,3 +9,6 @@ export { default as TicketsIcon } from './TicketsIcon';
 export { default as CommunicationIcon } from './CommunicationIcon';
 export { default as ProfileIcon } from './ProfileIcon';
 export { default as LogoutIcon } from './LogoutIcon';
+export { default as UserIcon } from './UserIcon';
+export { default as BellIcon } from './BellIcon';
+export { default as HomeIcon } from './HomeIcon';
