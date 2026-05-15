@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Register.css';
-import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/auth';
+import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/fields';
 import { TermsLabel } from './TermsLabel';
 import { Button, LinkButton } from '../../components/buttons';
+import { AuthFooter } from '../../components/footer';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -148,9 +149,7 @@ export default function Register() {
             </div>
           </form>
 
-          <div className="register-footer">
-            NEIGHBOURHOOD © 2026
-          </div>
+          <AuthFooter />
         </div>
 
       </div>

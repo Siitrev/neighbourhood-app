@@ -152,16 +152,6 @@
   color: var(--text-form);
 }
 
-/* --- STOPKA --- */
-.register-footer {
-  margin-top: 32px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  text-align: center;
-}
-
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 960px) {
   .register-content {

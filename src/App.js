@@ -1,8 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
 import Login from './pages/login/Login';
+import ForgotPassword from './pages/forgot-password/ForgotPassword';
+import ResetPassword from './pages/reset-password/ResetPassword';
 import Register from './pages/register/Register';
 import Chat from './pages/chat/Chat';
 import Communication from './pages/communication/Communication';
@@ -19,6 +20,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register/:token" element={<Register />} />
 
         <Route path="/" element={
