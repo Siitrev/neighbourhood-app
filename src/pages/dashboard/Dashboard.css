@@ -1,0 +1,213 @@
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-welcome {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -1.2px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.dashboard-info {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.dashboard-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Karty */
+.dashboard-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+}
+
+.card-main-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  flex-grow: 1;
+  padding-right: 24px;
+}
+
+.card-text-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Teksty */
+.card-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.color-primary { color: var(--primary-blue); }
+.color-orange { color: var(--icon-orange-dark); }
+.color-muted { color: var(--icon-blue-muted); }
+
+.card-value {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 900;
+  font-size: 36px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.card-headline {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.card-desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Badge */
+.card-badge-status {
+  background-color: var(--icon-bg-orange);
+  color: var(--danger-main);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* Ikony i Media */
+.card-icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+
+.card-icon {
+  width: 28px;
+  height: auto;
+}
+
+.position-relative { position: relative; }
+
+.card-notification-tag {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: var(--danger-main);
+  color: var(--text-white);
+  border: 2px solid var(--bg-card);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-image-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+}
+
+.announcement-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* MODYFIKATOR PRZYCISKU */
+.dashboard-action-btn {
+  width: 180px !important;    /* Wymuszamy 180px */
+  height: 44px !important;    /* Wymuszamy 44px */
+  min-height: 44px !important;
+  margin-top: 0 !important;   /* Usuwamy margin-top: 8px z bazy */
+  border-radius: 16px !important; /* Zaokrąglenie z Figmy */
+  flex-shrink: 0;             /* Blokuje zgniatanie */
+  white-space: nowrap;
+}
+
+/* Baner */
+.dashboard-banner {
+  display: flex;
+  padding: 20px;
+  background-color: var(--danger-bg-primary);
+  border-radius: 16px;
+}
+
+.banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.banner-icon-img {
+  width: 20px;
+  height: auto;
+  color: var(--icon-bg-orange);
+}
+
+.banner-message {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--icon-bg-orange);
+  margin: 0;
+}
+
+.theme-bg-finance { background-color: var(--dash-finance-bg); }
+.theme-text-finance { color: var(--dash-finance-color); }
+.theme-bg-tickets { background-color: var(--dash-tickets-bg); }
+.theme-text-tickets { color: var(--dash-tickets-color); }
+.theme-bg-messages { background-color: var(--dash-messages-bg); }
+.theme-text-messages { color: var(--dash-messages-color); }

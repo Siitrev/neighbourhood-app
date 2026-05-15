@@ -29,6 +29,13 @@
 
   --border-default: #E1E3E4;      /* Standardowe ramki kontenerów i podziały */
   --border-active: #0040A1;       /* Aktywna ramka wybranej metody płatności */
+
+  --dash-finance-bg: var(--icon-bg-blue);
+  --dash-finance-color: var(--primary-blue);
+  --dash-tickets-bg: var(--icon-bg-orange);
+  --dash-tickets-color: var(--icon-orange-dark);
+  --dash-messages-bg: var(--icon-bg-blue);
+  --dash-messages-color: var(--icon-blue-muted);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,5 +52,12 @@
     --text-link: #ACC7FF;
 
     --border-default: #424654;
+
+    --dash-finance-bg: var(--primary-blue);
+    --dash-finance-color: var(--text-link);
+    --dash-tickets-bg: var(--danger-bg-primary); 
+    --dash-tickets-color: var(--icon-bg-orange);
+    --dash-messages-bg: var(--icon-blue-muted);
+    --dash-messages-color: var(--text-primary);
   }
 }
