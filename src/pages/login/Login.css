@@ -47,7 +47,7 @@
   border: 1px solid var(--border-default);
 }
 
-.forgot-password {
+.link-button.forgot-password {
   font-size: 12px;
   line-height: 16px;
 }
