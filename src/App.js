@@ -12,6 +12,7 @@ import Finances from './pages/finances/Finances';
 import Tickets from './pages/tickets/Tickets';
 import Profile from './pages/profile/Profile';
 import ForumThread from './pages/forum-thread/ForumThread';
+import AppShell from './components/layout/AppShell';
 
 import './styles/variables.css';
 
@@ -24,43 +25,23 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register/:token" element={<Register />} />
 
-        <Route path="/" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } /> 
-        
-        <Route path="/finances" element={
-          <ProtectedRoute>
-            <Finances />
-          </ProtectedRoute>
-        } />
-        <Route path="/tickets" element={
-          <ProtectedRoute>
-            <Tickets />
-          </ProtectedRoute>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/communication" element={
-          <ProtectedRoute>
-            <Communication />
-          </ProtectedRoute>
-        } /> 
-        <Route path="/communication/forum/:threadId" element={
-          <ProtectedRoute>
-            <ForumThread />
-          </ProtectedRoute>
-        } /> 
-        <Route path="/communication/chat" element={
-          <ProtectedRoute>
-            <Chat />
-          </ProtectedRoute>
-        } />
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppShell />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="finances" element={<Finances />} />
+          <Route path="tickets" element={<Tickets />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="communication">
+            <Route index element={<Communication />} />
+            <Route path="forum/:threadId" element={<ForumThread />} />
+            <Route path="chat" element={<Chat />} />
+          </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
