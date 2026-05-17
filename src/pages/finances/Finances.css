@@ -1,7 +1,8 @@
 .finances-wrapper {
-  max-width: 70%;
   margin: 0 auto;
+  max-width: 90%;
   display: flex;
+  padding: 0px;
   flex-direction: column;
   gap: 24px;
 }

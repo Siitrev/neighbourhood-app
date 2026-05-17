@@ -44,7 +44,7 @@ const HISTORY_EXTRA = [
 ];
 
 export default function Finances() {
-  const [paymentMethod, setPaymentMethod] = useState('blik');
+  const [paymentMethod, setPaymentMethod] = useState("blik");
   const [showMore, setShowMore] = useState(false);
 
   const visibleHistory = showMore
@@ -55,16 +55,27 @@ export default function Finances() {
     <main className="finances-wrapper">
       <header className="finances-header">
         <h1 className="finances-title">Finanse</h1>
-        <p className="finances-subtitle">Zarządzaj swoimi opłatami i historią transakcji.</p>
+        <p className="finances-subtitle">
+          Zarządzaj swoimi opłatami i historią transakcji.
+        </p>
       </header>
 
       {/* ── Bieżące Opłaty ── */}
       <section className="finances-card" aria-labelledby="heading-fees">
         <div className="finances-card__header">
-          <span className="finances-card__icon-wrap theme-bg-finance" aria-hidden="true">
-            <ReceiptIcon width={20} height={20} className="theme-text-finance" />
+          <span
+            className="finances-card__icon-wrap theme-bg-finance"
+            aria-hidden="true"
+          >
+            <ReceiptIcon
+              width={20}
+              height={20}
+              className="theme-text-finance"
+            />
           </span>
-          <h2 className="finances-card__title" id="heading-fees">Bieżące Opłaty</h2>
+          <h2 className="finances-card__title" id="heading-fees">
+            Bieżące Opłaty
+          </h2>
         </div>
 
         <ul className="finances-fees-grid" aria-label="Lista bieżących opłat">
@@ -83,15 +94,26 @@ export default function Finances() {
       {/* ── Opłać Rachunki ── */}
       <section className="finances-card" aria-labelledby="heading-pay">
         <div className="finances-card__header">
-          <span className="finances-card__icon-wrap theme-bg-finance" aria-hidden="true">
-            <FinanceIcon width={20} height={20} className="theme-text-finance" />
+          <span
+            className="finances-card__icon-wrap theme-bg-finance"
+            aria-hidden="true"
+          >
+            <FinanceIcon
+              width={20}
+              height={20}
+              className="theme-text-finance"
+            />
           </span>
-          <h2 className="finances-card__title" id="heading-pay">Opłać Rachunki</h2>
+          <h2 className="finances-card__title" id="heading-pay">
+            Opłać Rachunki
+          </h2>
         </div>
 
         <div className="finances-pay-fields">
           <div className="finances-pay-field">
-            <p className="finances-field-label" id="label-amount">KWOTA DO ZAPŁATY</p>
+            <p className="finances-field-label" id="label-amount">
+              KWOTA DO ZAPŁATY
+            </p>
             <div
               className="finances-field-value finances-field-value--amount"
               aria-labelledby="label-amount"
@@ -101,7 +123,10 @@ export default function Finances() {
             </div>
           </div>
           <div className="finances-pay-field">
-            <label className="finances-field-label" htmlFor="transfer-title-display">
+            <label
+              className="finances-field-label"
+              htmlFor="transfer-title-display"
+            >
               TYTUŁ PRZELEWU
             </label>
             <div
@@ -120,27 +145,33 @@ export default function Finances() {
           <div className="finances-payment-options">
             <button
               type="button"
-              className={`finances-payment-option${paymentMethod === 'blik' ? ' finances-payment-option--selected' : ''}`}
-              onClick={() => setPaymentMethod('blik')}
-              aria-pressed={paymentMethod === 'blik'}
+              className={`finances-payment-option${paymentMethod === "blik" ? " finances-payment-option--selected" : ""}`}
+              onClick={() => setPaymentMethod("blik")}
+              aria-pressed={paymentMethod === "blik"}
             >
               <PhoneIcon width={22} height={22} aria-hidden="true" />
               <span className="finances-payment-option__text">
-                <span className="finances-payment-option__sublabel">SZYBKA PŁATNOŚĆ</span>
+                <span className="finances-payment-option__sublabel">
+                  SZYBKA PŁATNOŚĆ
+                </span>
                 <strong className="finances-payment-option__name">BLIK</strong>
               </span>
             </button>
 
             <button
               type="button"
-              className={`finances-payment-option${paymentMethod === 'transfer' ? ' finances-payment-option--selected' : ''}`}
-              onClick={() => setPaymentMethod('transfer')}
-              aria-pressed={paymentMethod === 'transfer'}
+              className={`finances-payment-option${paymentMethod === "transfer" ? " finances-payment-option--selected" : ""}`}
+              onClick={() => setPaymentMethod("transfer")}
+              aria-pressed={paymentMethod === "transfer"}
             >
               <GlobeIcon width={22} height={22} aria-hidden="true" />
               <span className="finances-payment-option__text">
-                <span className="finances-payment-option__sublabel">E-TRANSFER</span>
-                <strong className="finances-payment-option__name">Przelew online</strong>
+                <span className="finances-payment-option__sublabel">
+                  E-TRANSFER
+                </span>
+                <strong className="finances-payment-option__name">
+                  Przelew online
+                </strong>
               </span>
             </button>
           </div>
@@ -160,10 +191,19 @@ export default function Finances() {
       {/* ── Historia ── */}
       <section className="finances-card" aria-labelledby="heading-history">
         <div className="finances-card__header">
-          <span className="finances-card__icon-wrap theme-bg-tickets" aria-hidden="true">
-            <HistoryIcon width={20} height={20} className="theme-text-tickets" />
+          <span
+            className="finances-card__icon-wrap theme-bg-tickets"
+            aria-hidden="true"
+          >
+            <HistoryIcon
+              width={20}
+              height={20}
+              className="theme-text-tickets"
+            />
           </span>
-          <h2 className="finances-card__title" id="heading-history">Historia</h2>
+          <h2 className="finances-card__title" id="heading-history">
+            Historia
+          </h2>
         </div>
 
         <ul
@@ -178,7 +218,7 @@ export default function Finances() {
               <div className="finances-tx__row">
                 <span className="finances-tx__title">{tx.title}</span>
                 <strong
-                  className={`finances-tx__amount${tx.negative ? ' finances-tx__amount--negative' : ''}`}
+                  className={`finances-tx__amount${tx.negative ? " finances-tx__amount--negative" : ""}`}
                 >
                   {tx.amount} PLN
                 </strong>
@@ -186,7 +226,7 @@ export default function Finances() {
               <div className="finances-tx__badges">
                 <span
                   className={`finances-tx__badge finances-tx__badge--${
-                    tx.status === 'ZAKSIĘGOWANO' ? 'success' : 'correction'
+                    tx.status === "ZAKSIĘGOWANO" ? "success" : "correction"
                   }`}
                 >
                   {tx.status}
@@ -206,11 +246,12 @@ export default function Finances() {
           aria-expanded={showMore}
           aria-controls="finances-history-list"
         >
-          {showMore ? 'POKAŻ MNIEJ TRANSAKCJI' : 'POKAŻ WIĘCEJ TRANSAKCJI'}
+          {showMore ? "POKAŻ MNIEJ TRANSAKCJI" : "POKAŻ WIĘCEJ TRANSAKCJI"}
           <ChevronDownIcon
-            width={14} height={14}
+            width={14}
+            height={14}
             aria-hidden="true"
-            className={showMore ? 'finances-chevron--rotated' : ''}
+            className={showMore ? "finances-chevron--rotated" : ""}
           />
         </button>
       </section>
