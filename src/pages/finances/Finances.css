@@ -1,0 +1,332 @@
+.finances-wrapper {
+  max-width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.finances-header {
+  margin-bottom: 8px;
+}
+
+.finances-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.finances-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.finances-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.finances-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.finances-card__icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.finances-card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.finances-fees-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.finances-fee-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-right: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.finances-fee-item:nth-child(3n) {
+  border-right: none;
+}
+
+.finances-fee-item:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.finances-fee-item__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.finances-fee-item__amount {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.finances-pay-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.finances-field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 8px;
+}
+
+.finances-field-value {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  min-height: 48px;
+}
+
+.finances-field-value--amount {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.finances-payment-methods {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.finances-payment-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.finances-payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--bg-card);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.finances-payment-option:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.finances-payment-option--selected {
+  border-color: var(--border-active);
+  background-color: var(--active-menu-bg);
+}
+
+.finances-payment-option__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.finances-payment-option__sublabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.finances-payment-option__name {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.finances-pay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: var(--primary-blue);
+  color: var(--text-white);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  transition: filter 0.15s ease;
+}
+
+.finances-pay-btn:hover {
+  filter: brightness(1.12);
+}
+
+.finances-pay-btn:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 3px;
+}
+
+.finances-history-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.finances-tx {
+  padding: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.finances-tx__date {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary-blue);
+}
+
+.finances-tx__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.finances-tx__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.finances-tx__amount {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.finances-tx__amount--negative {
+  color: var(--danger-main);
+}
+
+.finances-tx__badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.finances-tx__badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.finances-tx__badge--success {
+  background: var(--success-bg);
+  color: var(--success-main);
+}
+
+.finances-tx__badge--correction {
+  background: var(--icon-bg-orange);
+  color: var(--icon-orange-dark);
+}
+
+.finances-tx__badge--method {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.finances-show-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.finances-show-more:hover {
+  color: var(--text-primary);
+}
+
+.finances-show-more:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.finances-chevron--rotated {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .finances-payment-option--selected {
+    background-color: var(--icon-bg-blue-transparent);
+  }
+}
