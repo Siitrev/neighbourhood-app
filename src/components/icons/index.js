@@ -22,3 +22,7 @@ export { default as GlobeIcon } from './GlobeIcon';
 export { default as ShieldCheckIcon } from './ShieldCheckIcon';
 export { default as ReceiptIcon } from './ReceiptIcon';
 export { default as ChevronDownIcon } from './ChevronDownIcon';
+export { default as AlertTriangleIcon } from './AlertTriangleIcon';
+export { default as SparkleIcon } from './SparkleIcon';
+export { default as CameraIcon } from './CameraIcon';
+export { default as DotsMoreIcon } from './DotsMoreIcon';
