@@ -20,7 +20,7 @@ export default function Dashboard() {
           iconColorClass="theme-text-finance"
           label="Rachunek"
           labelColorClass="theme-text-finance"
-          title="420,50 PLN"
+          title="842,50 PLN"
           titleIsValue={true}
           description="Termin płatności: 15.06.2026"
           buttonText="Szczegóły opłat"

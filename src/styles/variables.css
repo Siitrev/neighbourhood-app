@@ -13,12 +13,14 @@
   --text-white: #FFFFFF;          /* Tekst na ciemnych przyciskach */
   --text-link: var(--primary-blue); /* Kolor linków */
   --text-form: #424654;
+  --success-main: #1B6E2E;        /* Kolor elementów oznaczonych poprawnym statusem (SUKCES, ZAKSIĘGOWANO) */
+  --success-bg:   #D6F0DC;
 
   --primary-blue: #0040A1;        /* Główny niebieski (ikony, mocne akcenty, gradient start) */
   --primary-blue-light: #0056D2;  /* Jasny niebieski (gradient end dla głównego przycisku) */
   --active-menu-text: #1D4ED8;    /* Tekst/ikona aktywnej zakładki */
   --active-menu-bg: #EFF6FF;      /* Tło aktywnej zakładki w menu */
-  
+
   --danger-main: #BA1A1A;         /* Czerwony (Wyloguj, ikona ogrzewania) */
   --danger-bg-primary: #812800;   /* Ciemnopomarańczowe tło*/
   --icon-bg-blue: #DAE2FF;        /* Jasnoniebieskie tło pod ikonami głównymi */
@@ -48,14 +50,14 @@
 
     --text-primary: #FFFFFF;
     --text-form: #C2C6D5;
-    --text-secondary: rgba(194, 198, 213, 0.5); 
+    --text-secondary: rgba(194, 198, 213, 0.5);
     --text-link: #ACC7FF;
 
     --border-default: #424654;
 
     --dash-finance-bg: var(--primary-blue);
     --dash-finance-color: var(--text-link);
-    --dash-tickets-bg: var(--danger-bg-primary); 
+    --dash-tickets-bg: var(--danger-bg-primary);
     --dash-tickets-color: var(--icon-bg-orange);
     --dash-messages-bg: var(--icon-blue-muted);
     --dash-messages-color: var(--text-primary);
