@@ -119,7 +119,7 @@
 }
 
 /* Ikony i Media */
-.card-icon-box {
+.dashboard-wrapper .card-icon-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,7 +128,7 @@
   border-radius: 12px;
 }
 
-.card-icon {
+.dashboard-wrapper .card-icon {
   width: 28px;
   height: auto;
 }
@@ -211,3 +211,10 @@
 .theme-text-tickets { color: var(--dash-tickets-color); }
 .theme-bg-messages { background-color: var(--dash-messages-bg); }
 .theme-text-messages { color: var(--dash-messages-color); }
+
+@media (prefers-color-scheme: dark) {
+  .card-badge-status {
+    background: var(--danger-main);
+    color: var(--icon-bg-orange);
+  }
+}
