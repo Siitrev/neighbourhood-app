@@ -15,6 +15,7 @@ export { default as HomeIcon } from './HomeIcon';
 export { default as WrenchIcon } from './WrenchIcon';
 export { default as WaterDropIcon } from './WaterDropIcon';
 export { default as FlameIcon } from './FlameIcon';
+export { default as TermometerIcon } from './TermometerIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as HistoryIcon } from './HistoryIcon';
 export { default as PhoneIcon } from './PhoneIcon';
