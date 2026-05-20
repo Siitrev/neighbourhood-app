@@ -28,8 +28,8 @@ const CURRENT_FEES = [
 ];
 
 const HISTORY_INITIAL = [
-  { id: 1, date: '15 KWI 2024', title: 'Opłata 04/2024',   amount: '842,50',  status: 'ZAKSIĘGOWANO', method: 'BLIK',      negative: false },
-  { id: 2, date: '14 MAR 2024', title: 'Nadpłata za wodę', amount: '-124,15', status: 'KOREKTA',      method: 'Systemowa', negative: true  },
+  { id: 1, date: '13 MAJ 2024', title: 'Opłata 05/2024',   amount: '842,50',  status: 'ZAKSIĘGOWANO', method: 'BLIK',      negative: false },
+  { id: 2, date: '15 KWI 2024', title: 'Opłata 04/2024',   amount: '842,50',  status: 'ZAKSIĘGOWANO', method: 'Przelew',   negative: false  },
   { id: 3, date: '10 MAR 2024', title: 'Opłata 03/2024',   amount: '842,50',  status: 'ZAKSIĘGOWANO', method: 'Przelew',   negative: false },
   { id: 4, date: '12 LUT 2024', title: 'Opłata 02/2024',   amount: '842,50',  status: 'ZAKSIĘGOWANO', method: 'BLIK',      negative: false },
 ];
