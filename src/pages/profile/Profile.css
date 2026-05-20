@@ -22,6 +22,8 @@
     --profile-blue-card-bg: var(--primary-blue-light);
     --profile-blue-card-text-muted: var(--icon-bg-blue);
     --profile-verified-color: var(--text-link);
+    --bg-icon-primary: var(--icon-bg-blue-transparent);
+    --color-icon-primary: var(--text-link);
   }
 }
 
@@ -92,7 +94,7 @@
   gap: 12px;
 }
 
-.card-icon-box {
+.profile-wrapper .card-icon-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,7 +107,7 @@
 .box-primary { background-color: var(--bg-icon-primary, var(--icon-bg-blue)); }
 .color-primary { color: var(--color-icon-primary, var(--primary-blue)); }
 
-.card-icon {
+.profile-wrapper .card-icon {
   width: 24px;
   height: auto;
   max-height: 24px;

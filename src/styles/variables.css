@@ -45,6 +45,7 @@
     --bg-main: #121416;
     --bg-card: #1A1C1E;
     --bg-secondary: #333537;
+    --danger-main: #93000A;
 
     --shadow-default: none;
 
@@ -61,5 +62,8 @@
     --dash-tickets-color: var(--icon-bg-orange);
     --dash-messages-bg: var(--icon-blue-muted);
     --dash-messages-color: var(--text-primary);
+
+    --icon-bg-orange: #FFDAD6;
+    --icon-bg-blue-transparent: rgba(178, 197, 255, 0.1);
   }
 }

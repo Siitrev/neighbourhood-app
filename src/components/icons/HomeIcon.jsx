@@ -1,19 +1,20 @@
 import React from 'react';
 
-export default function HomeIcon({ width = 22, height = 18, ...props }) {
+export default function HomeIcon({ width = 16, height = 18, className = '', ...props }) {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 22 18"
+      viewBox="0 0 16 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       focusable="false"
+      className={className}
       {...props}
     >
       <path
-        d="M16 6H18V4H16V6ZM16 10H18V8H16V10ZM16 14H18V12H16V14ZM16 18V16H20V2H11V3.4L9 1.95V0H22V18H16ZM0 18V8L7 3L14 8V18H8V13H6V18H0ZM2 16H4V11H10V16H12V9L7 5.45L2 9V16ZM10 16V11H4V16V11H7H10V16Z"
+        d="M2 16H5V10H11V16H14V7L8 2.5L2 7V16ZM0 18V6L8 0L16 6V18H9V12H7V18H0Z"
         fill="currentColor"
       />
     </svg>

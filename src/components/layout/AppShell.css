@@ -5,10 +5,17 @@
 }
 
 .app-shell__content {
+  display: flex;
+  justify-content: center;
   flex: 1;
   min-width: 0;
-  padding: 32px;
+  padding: 48px;
   box-sizing: border-box;
+}
+
+.app-shell__content > * {
+  width: 100%;
+  max-width: 1024px;
 }
 
 @media (max-width: 960px) {
