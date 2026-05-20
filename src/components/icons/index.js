@@ -27,3 +27,8 @@ export { default as AlertTriangleIcon } from './AlertTriangleIcon';
 export { default as SparkleIcon } from './SparkleIcon';
 export { default as CameraIcon } from './CameraIcon';
 export { default as DotsMoreIcon } from './DotsMoreIcon';
+export { default as WarningIcon } from './WarningIcon';
+export { default as TicketWrenchIcon } from './TicketWrenchIcon';
+export { default as BrushIcon } from './BrushIcon';
+export { default as DotsIcon } from './DotsIcon';
+export { default as PhoneCallIcon } from './PhoneCallIcon';
