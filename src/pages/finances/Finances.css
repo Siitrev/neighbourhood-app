@@ -1,49 +1,76 @@
 .finances-wrapper {
+  width: 100%;
+  max-width: 1024px;
   margin: 0 auto;
-  max-width: 90%;
   display: flex;
-  padding: 0px;
   flex-direction: column;
-  gap: 24px;
+  gap: 48px;
+  font-family: 'Inter', sans-serif;
 }
 
 .finances-header {
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .finances-title {
-  font-size: 3rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 48px;
+  line-height: 48px;
   font-weight: 700;
+  letter-spacing: -2.4px;
   color: var(--text-primary);
-  margin: 0 0 4px;
-  line-height: 1.2;
+  margin: 0;
 }
 
 .finances-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
   color: var(--text-secondary);
-  font-size: 1rem;
-  margin: 0;
+  font-size: 16px;
+  line-height: 28px;
+  margin: 8px 0 0;
+}
+
+.theme-bg-finance {
+  background-color: var(--icon-bg-blue);
+}
+
+.theme-text-finance {
+  color: var(--primary-blue);
+}
+
+.theme-bg-tickets {
+  background-color: var(--icon-bg-orange);
+}
+
+.theme-text-tickets {
+  color: var(--icon-orange-dark);
 }
 
 .finances-card {
   background: var(--bg-card);
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid var(--border-default);
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+section.finances-card[aria-labelledby="heading-history"] {
+  gap: 32px;
 }
 
 .finances-card__header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .finances-card__icon-wrap {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,21 +78,21 @@
 }
 
 .finances-card__title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
   color: var(--text-primary);
   margin: 0;
 }
 
 .finances-fees-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   list-style: none;
   padding: 0;
   margin: 0;
-  border: 1px solid var(--border-default);
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 .finances-fee-item {
@@ -73,63 +100,107 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border-right: 1px solid var(--border-default);
-  border-bottom: 1px solid var(--border-default);
-}
-
-.finances-fee-item:nth-child(3n) {
-  border-right: none;
-}
-
-.finances-fee-item:nth-last-child(-n + 2) {
-  border-bottom: none;
+  min-height: 56px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: var(--bg-secondary);
 }
 
 .finances-fee-item__label {
+  font-family: 'Inter', sans-serif;
   display: flex;
   align-items: center;
   gap: 8px;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
 }
 
 .finances-fee-item__amount {
-  font-weight: 600;
-  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 24px;
   color: var(--text-primary);
+}
+
+.finances-fee-item--czynsz svg {
+  color: var(--primary-blue);
+}
+
+.finances-fee-item--remonty svg {
+  color: var(--icon-blue-muted);
+}
+
+.finances-fee-item--woda svg {
+  color: var(--icon-orange-dark);
+}
+
+.finances-fee-item--ogrzewanie svg {
+  color: var(--danger-main);
+}
+
+.finances-fee-item--smieci svg {
+  color: var(--text-secondary);
 }
 
 .finances-pay-fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 32px;
 }
 
 .finances-field-label {
+  font-family: 'Inter', sans-serif;
   display: block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.07em;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--text-secondary);
   margin: 0 0 8px;
 }
 
-.finances-field-value {
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
-  border: 1px solid var(--border-default);
+.finances-field-value,
+.finances-field-input {
+  font-family: 'Inter', sans-serif;
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: 0;
   border-radius: 8px;
+  background: var(--bg-secondary);
   color: var(--text-primary);
-  font-size: 1rem;
-  min-height: 48px;
+  font-size: 18px;
+  line-height: 28px;
+  min-height: 64px;
+  box-sizing: border-box;
+  font-weight: 400;
 }
 
-.finances-field-value--amount {
-  font-size: 1.375rem;
+.finances-field-input:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.finances-field-input[readonly] {
+  cursor: default;
+}
+
+.finances-field-value--amount,
+.finances-field-input--amount {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
   font-weight: 700;
   letter-spacing: -0.01em;
+  min-height: 68px;
+}
+
+.finances-field-input--title {
+  min-height: 68px;
 }
 
 .finances-payment-methods {
@@ -142,21 +213,27 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin-top: 8px;
+  margin-top: 24px;
 }
 
 .finances-payment-option {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
-  border: 1.5px solid var(--border-default);
+  gap: 16px;
+  padding: 24px;
+  border: 2px solid var(--border-default);
   border-radius: 8px;
-  background: var(--bg-card);
+  background: var(--bg-secondary);
   cursor: pointer;
   text-align: left;
   width: 100%;
+  min-height: 87px;
   transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.finances-payment-option svg {
+  color: var(--text-primary);
+  flex: 0 0 auto;
 }
 
 .finances-payment-option:focus-visible {
@@ -166,7 +243,7 @@
 
 .finances-payment-option--selected {
   border-color: var(--border-active);
-  background-color: var(--active-menu-bg);
+  background-color: var(--icon-bg-blue);
 }
 
 .finances-payment-option__text {
@@ -176,15 +253,19 @@
 }
 
 .finances-payment-option__sublabel {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.07em;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 900;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-secondary);
 }
 
 .finances-payment-option__name {
-  font-size: 1.0625rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -193,15 +274,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 24px;
-  background: var(--primary-blue);
-  color: var(--text-white);
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  transition: filter 0.15s ease;
+  gap: 12px;
+  min-height: 76px;
+  padding: 24px;
+  border-radius: 16px;
+  font-size: 20px;
+  line-height: 28px;
+  margin-top: 0;
 }
 
 .finances-pay-btn:hover {
@@ -226,15 +305,18 @@
   padding: 16px;
   border: 1px solid var(--border-default);
   border-radius: 8px;
+  background: var(--bg-card);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 .finances-tx__date {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 900;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--primary-blue);
 }
@@ -247,20 +329,24 @@
 }
 
 .finances-tx__title {
-  font-size: 1rem;
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
 .finances-tx__amount {
-  font-size: 1.0625rem;
-  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 900;
   color: var(--text-primary);
   white-space: nowrap;
 }
 
 .finances-tx__amount--negative {
-  color: var(--danger-main);
+  color: var(--primary-blue);
 }
 
 .finances-tx__badges {
@@ -270,30 +356,34 @@
 }
 
 .finances-tx__badge {
-  font-size: 0.6875rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 15px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
   text-transform: uppercase;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 .finances-tx__badge--success {
-  background: var(--success-bg);
-  color: var(--success-main);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .finances-tx__badge--correction {
-  background: var(--icon-bg-orange);
-  color: var(--icon-orange-dark);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .finances-tx__badge--method {
+  font-weight: 500;
   background: var(--bg-secondary);
   color: var(--text-secondary);
 }
 
 .finances-show-more {
+  font-family: 'Inter', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -301,14 +391,16 @@
   width: 100%;
   background: none;
   border: none;
-  padding: 8px;
-  font-size: 0.8125rem;
+  padding: 16px 0;
+  font-size: 12px;
+  line-height: 16px;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-secondary);
   cursor: pointer;
   border-radius: 4px;
+  border-top: 1px solid var(--border-default);
   transition: color 0.15s ease;
 }
 
@@ -327,7 +419,140 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .finances-title {
+    font-weight: 800;
+  }
+
+  .theme-bg-finance {
+    background-color: var(--icon-bg-blue-transparent);
+  }
+
+  .theme-text-finance {
+    color: var(--text-link);
+  }
+
+  .theme-bg-tickets {
+    background-color: var(--danger-bg-primary);
+  }
+
+  .theme-text-tickets {
+    color: var(--icon-bg-orange);
+  }
+
+  .finances-subtitle {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
   .finances-payment-option--selected {
     background-color: var(--icon-bg-blue-transparent);
+    border-color: var(--primary-blue-light);
+  }
+
+  .finances-payment-option svg {
+    color: var(--text-secondary);
+  }
+
+  .finances-payment-option--selected svg {
+    color: var(--text-link);
+  }
+
+  .finances-fee-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+  }
+
+  .finances-fee-item__label {
+    color: var(--text-form);
+  }
+
+  .finances-fee-item--czynsz svg {
+    color: var(--text-link);
+  }
+
+  .finances-fee-item--remonty svg {
+    color: var(--text-form);
+  }
+
+  .finances-fee-item--woda svg {
+    color: var(--icon-bg-orange);
+  }
+
+  .finances-fee-item--ogrzewanie svg {
+    color: var(--danger-main);
+  }
+
+  .finances-fee-item--smieci svg {
+    color: var(--text-secondary);
+  }
+
+  .finances-payment-option {
+    background: var(--bg-card);
+    border-color: var(--border-default);
+  }
+
+  .finances-field-value {
+    background: var(--bg-secondary);
+  }
+
+  .finances-tx__date {
+    color: var(--text-link);
+  }
+
+  .finances-tx {
+    border-color: var(--bg-secondary);
+  }
+
+  .finances-tx__amount--negative {
+    color: var(--icon-bg-orange);
+  }
+
+  .finances-tx__badge--success,
+  .finances-tx__badge--correction {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+  }
+
+  .finances-show-more {
+    border-top-color: var(--bg-secondary);
+  }
+}
+
+@supports (background-color: color-mix(in srgb, #000, #fff)) {
+  @media (prefers-color-scheme: dark) {
+    .theme-bg-finance {
+      background-color: color-mix(in srgb, var(--primary-blue-light) 20%, transparent);
+    }
+
+    .theme-bg-tickets {
+      background-color: color-mix(in srgb, var(--danger-bg-primary) 30%, transparent);
+    }
+
+    .finances-payment-option--selected {
+      background-color: color-mix(in srgb, var(--primary-blue-light) 20%, transparent);
+    }
+  }
+}
+
+@supports (background-color: color-mix(in srgb, #000, #fff)) {
+  @media (prefers-color-scheme: dark) {
+    .theme-text-tickets {
+      color: color-mix(in srgb, var(--icon-bg-orange) 80%, var(--icon-orange-dark));
+    }
+
+    .finances-tx__amount--negative {
+      color: color-mix(in srgb, var(--icon-bg-orange) 80%, var(--icon-orange-dark));
+    }
+
+    .finances-tx__badge--success,
+    .finances-tx__badge--correction,
+    .finances-tx__badge--method {
+      background: color-mix(in srgb, var(--bg-card) 40%, var(--bg-secondary) 60%);
+      color: color-mix(in srgb, var(--text-form) 65%, var(--bg-card) 35%);
+    }
+
+    .finances-show-more {
+      color: color-mix(in srgb, var(--text-form) 65%, var(--bg-card) 35%);
+    }
   }
 }

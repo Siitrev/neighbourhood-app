@@ -5,7 +5,7 @@ import {
   FinanceIcon,
   WrenchIcon,
   WaterDropIcon,
-  FlameIcon,
+  TermometerIcon,
   TrashIcon,
   HistoryIcon,
   PhoneIcon,
@@ -14,6 +14,7 @@ import {
   ReceiptIcon,
   ChevronDownIcon,
 } from '../../components/icons';
+import { Button } from '../../components/buttons';
 
 const TOTAL_AMOUNT = '842,50';
 const TRANSFER_TITLE = 'Opłata eksploatacyjna 05/2024';
@@ -22,7 +23,7 @@ const CURRENT_FEES = [
   { id: 'czynsz',      Icon: HomeIcon,      label: 'Czynsz',     amount: '450,00 PLN' },
   { id: 'remonty',    Icon: WrenchIcon,    label: 'Remonty',    amount: '120,00 PLN' },
   { id: 'woda',       Icon: WaterDropIcon, label: 'Woda',       amount: '115,50 PLN' },
-  { id: 'ogrzewanie', Icon: FlameIcon,     label: 'Ogrzewanie', amount: '95,00 PLN'  },
+  { id: 'ogrzewanie', Icon: TermometerIcon, label: 'Ogrzewanie', amount: '95,00 PLN'  },
   { id: 'smieci',     Icon: TrashIcon,     label: 'Śmieci',     amount: '62,00 PLN'  },
 ];
 
@@ -46,6 +47,10 @@ const HISTORY_EXTRA = [
 export default function Finances() {
   const [paymentMethod, setPaymentMethod] = useState("blik");
   const [showMore, setShowMore] = useState(false);
+
+  const handlePayNow = () => {
+    window.open('https://blik.com', '_blank', 'noopener,noreferrer');
+  };
 
   const visibleHistory = showMore
     ? [...HISTORY_INITIAL, ...HISTORY_EXTRA]
@@ -80,7 +85,7 @@ export default function Finances() {
 
         <ul className="finances-fees-grid" aria-label="Lista bieżących opłat">
           {CURRENT_FEES.map(({ id, Icon, label, amount }) => (
-            <li key={id} className="finances-fee-item">
+            <li key={id} className={`finances-fee-item finances-fee-item--${id}`}>
               <span className="finances-fee-item__label">
                 <Icon width={16} height={16} aria-hidden="true" />
                 {label}
@@ -114,13 +119,12 @@ export default function Finances() {
             <p className="finances-field-label" id="label-amount">
               KWOTA DO ZAPŁATY
             </p>
-            <div
-              className="finances-field-value finances-field-value--amount"
+            <input
+              className="finances-field-input finances-field-input--amount"
               aria-labelledby="label-amount"
-              role="status"
-            >
-              {TOTAL_AMOUNT} PLN
-            </div>
+              readOnly
+              value={`${TOTAL_AMOUNT} PLN`}
+            />
           </div>
           <div className="finances-pay-field">
             <label
@@ -129,14 +133,12 @@ export default function Finances() {
             >
               TYTUŁ PRZELEWU
             </label>
-            <div
-              className="finances-field-value"
+            <input
+              className="finances-field-input finances-field-input--title"
               id="transfer-title-display"
-              role="textbox"
-              aria-readonly="true"
-            >
-              {TRANSFER_TITLE}
-            </div>
+              readOnly
+              value={TRANSFER_TITLE}
+            />
           </div>
         </div>
 
@@ -149,7 +151,7 @@ export default function Finances() {
               onClick={() => setPaymentMethod("blik")}
               aria-pressed={paymentMethod === "blik"}
             >
-              <PhoneIcon width={22} height={22} aria-hidden="true" />
+              <PhoneIcon width={19} height={28} aria-hidden="true" />
               <span className="finances-payment-option__text">
                 <span className="finances-payment-option__sublabel">
                   SZYBKA PŁATNOŚĆ
@@ -164,7 +166,7 @@ export default function Finances() {
               onClick={() => setPaymentMethod("transfer")}
               aria-pressed={paymentMethod === "transfer"}
             >
-              <GlobeIcon width={22} height={22} aria-hidden="true" />
+              <GlobeIcon width={25} height={25} aria-hidden="true" />
               <span className="finances-payment-option__text">
                 <span className="finances-payment-option__sublabel">
                   E-TRANSFER
@@ -177,15 +179,10 @@ export default function Finances() {
           </div>
         </fieldset>
 
-        <a
-          href="https://blik.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="finances-pay-btn"
-        >
-          <ShieldCheckIcon width={18} height={18} aria-hidden="true" />
+        <Button type="button" className="finances-pay-btn" onClick={handlePayNow}>
+          <ShieldCheckIcon width={16} height={20} aria-hidden="true" />
           Zapłać teraz ({TOTAL_AMOUNT} PLN)
-        </a>
+        </Button>
       </section>
 
       {/* ── Historia ── */}
