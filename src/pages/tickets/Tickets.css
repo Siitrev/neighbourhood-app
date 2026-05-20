@@ -638,13 +638,23 @@
   .tickets-wrapper .tickets-submit-btn:focus-visible,
   .tickets-item__action:focus-visible,
   .tickets-show-more:focus-visible,
-  .tickets-filter-btn:focus-visible {
+  .tickets-filter-btn:focus-visible,
+  .tickets-photo-btn:focus-within {
     outline-color: var(--text-link);
   }
 
   .tickets-filter-btn:last-child {
     background: var(--danger-main);
     color: var(--icon-bg-orange);
+  }
+
+  .tickets-photo-btn {
+    border-color: var(--border-default);
+  }
+
+  .tickets-photo-btn:hover {
+    border-color: var(--text-link);
+    color: var(--text-link);
   }
 
   .tickets-item--in-progress::before {
