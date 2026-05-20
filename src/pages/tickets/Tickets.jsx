@@ -1,31 +1,32 @@
 import React, { useState, useRef } from "react";
 import "./Tickets.css";
 import {
-  WrenchIcon,
   ChevronDownIcon,
-  AlertTriangleIcon,
-  SparkleIcon,
   CameraIcon,
-  DotsMoreIcon,
-  PhoneIcon,
   CheckIcon,
+  WarningIcon,
+  TicketWrenchIcon,
+  BrushIcon,
+  DotsIcon,
+  PhoneCallIcon,
 } from "../../components/icons";
+import { Button } from "../../components/buttons";
 
 const CATEGORIES = [
-  { id: "awaria", Icon: AlertTriangleIcon, label: "Awaria" },
-  { id: "usterka", Icon: WrenchIcon, label: "Usterka" },
-  { id: "sprzatanie", Icon: SparkleIcon, label: "Sprzątanie" },
-  { id: "inne", Icon: DotsMoreIcon, label: "Inne" },
+  { id: "awaria", Icon: WarningIcon, label: "Awaria" },
+  { id: "usterka", Icon: TicketWrenchIcon, label: "Usterka" },
+  { id: "sprzatanie", Icon: BrushIcon, label: "Sprzątanie" },
+  { id: "inne", Icon: DotsIcon, label: "Inne" },
 ];
 
 const CATEGORY_CONFIG = {
-  awaria: { Icon: AlertTriangleIcon, title: (loc) => `Awaria – ${loc}` },
-  usterka: { Icon: WrenchIcon, title: (loc) => `Usterka – ${loc}` },
+  awaria: { Icon: WarningIcon, title: (loc) => `Awaria – ${loc}` },
+  usterka: { Icon: TicketWrenchIcon, title: (loc) => `Usterka – ${loc}` },
   sprzatanie: {
-    Icon: SparkleIcon,
+    Icon: BrushIcon,
     title: (loc) => `Zgłoszenie sprzątania – ${loc}`,
   },
-  inne: { Icon: DotsMoreIcon, title: (loc) => `Inne zgłoszenie – ${loc}` },
+  inne: { Icon: DotsIcon, title: (loc) => `Inne zgłoszenie – ${loc}` },
 };
 
 const LOCATIONS = [
@@ -49,7 +50,7 @@ const INITIAL_TICKETS = [
     number: "ZG-2023-042",
     date: "14 PAŹ 2023",
     status: "W REALIZACJI",
-    Icon: WrenchIcon,
+    Icon: TicketWrenchIcon,
     title: "Usterka oświetlenia w klatce",
     description:
       "Brak światła na 3. piętrze przy windzie. Miejsce: Klatka schodowa.",
@@ -59,7 +60,7 @@ const INITIAL_TICKETS = [
     number: "ZG-2023-045",
     date: "DZISIAJ 08:30",
     status: "NOWE",
-    Icon: AlertTriangleIcon,
+    Icon: WarningIcon,
     title: "Awaria domofonu - brak sygnału",
     description: "Nie słychać dzwonka w mieszkaniu nr 4. Miejsce: Lokal.",
   },
@@ -68,7 +69,7 @@ const INITIAL_TICKETS = [
     number: "ZG-2023-039",
     date: "10 PAŹ 2023",
     status: "ZAKOŃCZONE",
-    Icon: SparkleIcon,
+    Icon: BrushIcon,
     title: "Zanieczyszczenie na parkingu",
     description: "Rozlany olej na miejscu nr 12. Teren wspólny.",
   },
@@ -80,7 +81,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-031",
     date: "02 PAŹ 2023",
     status: "ZAKOŃCZONE",
-    Icon: WrenchIcon,
+    Icon: TicketWrenchIcon,
     title: "Awaria windy w bloku B",
     description:
       "Winda zatrzymuje się między piętrami. Miejsce: Klatka schodowa.",
@@ -90,7 +91,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-027",
     date: "25 WRZ 2023",
     status: "ZAKOŃCZONE",
-    Icon: SparkleIcon,
+    Icon: BrushIcon,
     title: "Zabrudzenia na klatce schodowej",
     description:
       "Plamy na ścianie przy wejściu do bloku. Miejsce: Klatka schodowa.",
@@ -100,7 +101,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-021",
     date: "10 WRZ 2023",
     status: "ZAKOŃCZONE",
-    Icon: AlertTriangleIcon,
+    Icon: WarningIcon,
     title: "Awaria oświetlenia zewnętrznego",
     description: "Nie działają lampy przy wejściu do garażu. Miejsce: Parking.",
   },
@@ -109,7 +110,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-015",
     date: "28 SIE 2023",
     status: "ZAKOŃCZONE",
-    Icon: WrenchIcon,
+    Icon: TicketWrenchIcon,
     title: "Uszkodzona skrzynka pocztowa",
     description:
       "Skrzynka nr 42 nie domyka się prawidłowo. Miejsce: Klatka schodowa.",
@@ -119,7 +120,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-009",
     date: "14 SIE 2023",
     status: "ZAKOŃCZONE",
-    Icon: DotsMoreIcon,
+    Icon: DotsIcon,
     title: "Hałas w godzinach nocnych",
     description: "Głośna muzyka z lokalu nr 12 po 22:00. Miejsce: Lokal.",
   },
@@ -128,7 +129,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-004",
     date: "03 SIE 2023",
     status: "ZAKOŃCZONE",
-    Icon: SparkleIcon,
+    Icon: BrushIcon,
     title: "Wywóz odpadów wielkogabarytowych",
     description: "Stara sofa pozostawiona przy altanie śmietnikowej.",
   },
@@ -309,14 +310,14 @@ export default function Tickets() {
                 onChange={handlePhotoChange}
               />
             </label>
-            <button
+            <Button
               type="button"
               className="tickets-submit-btn"
               onClick={handleSubmit}
               disabled={!description.trim()}
             >
               Wyślij zgłoszenie &rsaquo;
-            </button>
+            </Button>
           </div>
         </div>
       </section>
@@ -445,10 +446,13 @@ export default function Tickets() {
             bezpośredni kontakt telefoniczny z całodobowym pogotowiem
             technicznym.
           </p>
-          <a href="tel:+48123456789" className="tickets-emergency__phone">
-            <PhoneIcon width={18} height={18} aria-hidden="true" />
+          <Button
+            className="tickets-emergency__phone"
+            onClick={() => { window.location.href = "tel:+48123456789"; }}
+          >
+            <PhoneCallIcon width={18} height={18} aria-hidden="true" />
             +48 123 456 789
-          </a>
+          </Button>
         </div>
         <div className="tickets-emergency__image" aria-hidden="true">
           <img
