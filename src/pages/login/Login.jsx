@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
 import './Login.css';
 import { EmailField, PasswordField, CheckboxField } from '../../components/fields';
 import { Button, LinkButton } from '../../components/buttons';
@@ -10,23 +12,27 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
     
     if (email && password) {
-      const mockUser = {
-        id: 'user-123',
-        name: 'Jan Kowalski',
-        email: email,
-        role: 'resident'
-      };
-      
-      localStorage.setItem('currentUser', JSON.stringify(mockUser));
-      
-      navigate('/');
+      setLoading(true);
+      try {
+        await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
+        await signInWithEmailAndPassword(auth, email, password);
+        navigate('/');
+      } catch (err) {
+        console.error(err);
+        setError("Nie udało się zalogować. Sprawdź poprawność danych.");
+      } finally {
+        setLoading(false);
+      }
     } else {
-      alert("Proszę wpisać email i hasło.");
+      setError("Proszę wpisać email i hasło.");
     }
   };
 
@@ -39,6 +45,8 @@ export default function Login() {
           Witaj ponownie. Zaloguj się do swojego panelu mieszkańca.
         </h2>
       </div>
+
+      {error && <div className="login-error" role="alert" style={{ color: 'red', marginBottom: 'var(--space-2, 8px)' }}>{error}</div>}
 
       <form className="login-card" onSubmit={handleLogin}>
         <EmailField
@@ -78,8 +86,8 @@ export default function Login() {
           label="Zapamiętaj mnie na tym urządzeniu"
         />
 
-        <Button type="submit">
-          Zaloguj się
+        <Button type="submit" disabled={loading}>
+          {loading ? 'Ładowanie...' : 'Zaloguj się'}
         </Button>
 
       </form>
