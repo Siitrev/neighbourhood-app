@@ -1,11 +1,13 @@
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../firebase/AuthContext'
+import Loader from './Loader';
 
 export const ProtectedRoute = ({ children }) => {
-  const isAuth = localStorage.getItem('currentUser'); 
-  if (!isAuth) {
-    return <Navigate to="/login" replace />;
-  }
-  
+  const { user, loading } = useAuth();
+
+  if (loading) return <Loader />;
+  if (!user) return <Navigate to="/login" replace />;
+
   return children;
 };
 
