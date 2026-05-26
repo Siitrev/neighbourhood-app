@@ -36,8 +36,8 @@
   --dash-finance-color: var(--primary-blue);
   --dash-tickets-bg: var(--icon-bg-orange);
   --dash-tickets-color: var(--icon-orange-dark);
-  --dash-messages-bg: var(--icon-bg-blue);
-  --dash-messages-color: var(--icon-blue-muted);
+  --dash-announcements-bg: var(--icon-bg-blue);
+  --dash-announcements-color: var(--icon-blue-muted);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,8 +60,8 @@
     --dash-finance-color: var(--text-link);
     --dash-tickets-bg: var(--danger-bg-primary);
     --dash-tickets-color: var(--icon-bg-orange);
-    --dash-messages-bg: var(--icon-blue-muted);
-    --dash-messages-color: var(--text-primary);
+    --dash-announcements-bg: rgba(62, 81, 129, 0.3);
+    --dash-announcements-color: #B3C5FD;
 
     --icon-bg-orange: #FFDAD6;
     --icon-bg-blue-transparent: rgba(178, 197, 255, 0.1);
