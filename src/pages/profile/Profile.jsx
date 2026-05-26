@@ -1,4 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../firebase/AuthContext';
+import Loader from '../../components/protected-route/Loader';
 import './Profile.css';
 import ContactDetails from './components/ContactDetails';
 import SecuritySettings from './components/SecuritySettings';
@@ -7,10 +10,12 @@ import ApartmentDetails from './components/ApartmentDetails';
 import AccountStatus from './components/AccountStatus';
 
 export default function Profile() {
-  // Przykładowe dane wstrzykiwane z góry (np. pobrane z API)
+  const { user, userData: firestoreUser, loading } = useAuth();
+  const navigate = useNavigate();
+
   const userData = {
-    email: "jan.kowalski@example.com",
-    phone: "+48 600 100 200"
+    email: user?.email || "Brak emailu",
+    phone: firestoreUser?.phone || "Brak telefonu"
   };
 
   const notificationPrefs = [
@@ -33,11 +38,45 @@ export default function Profile() {
     description: "Twój profil posiada pełny dostęp do wszystkich funkcji portalu Neighbourhood."
   };
 
+  if (loading) {
+    return (
+      <main className="profile-wrapper">
+        <header className="profile-header">
+          <div>
+            <Loader width="200px" height="40px" />
+            <div style={{ marginTop: 'var(--space-2, 8px)' }}>
+              <Loader width="350px" height="24px" />
+            </div>
+          </div>
+          <Loader width="120px" height="40px" />
+        </header>
+
+        <div className="profile-layout">
+          <div className="profile-main-col">
+            <Loader height="300px" />
+            <div style={{ marginTop: 'var(--space-3, 24px)' }}>
+              <Loader height="200px" />
+            </div>
+          </div>
+
+          <aside className="profile-side-col">
+            <Loader height="250px" />
+            <div style={{ marginTop: 'var(--space-3, 24px)' }}>
+              <Loader height="150px" />
+            </div>
+          </aside>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="profile-wrapper">
       <header className="profile-header">
-        <h1 className="profile-title">Mój Profil</h1>
-        <p className="profile-subtitle">Zarządzaj swoimi danymi, ustawieniami bezpieczeństwa oraz preferencjami powiadomień.</p>
+        <div>
+          <h1 className="profile-title">Mój Profil</h1>
+          <p className="profile-subtitle">Zarządzaj swoimi danymi, ustawieniami bezpieczeństwa oraz preferencjami powiadomień.</p>
+        </div>
       </header>
 
       <div className="profile-layout">
