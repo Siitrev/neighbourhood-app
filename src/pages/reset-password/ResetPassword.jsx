@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { confirmPasswordReset } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
 import './ResetPassword.css';
 import { PasswordField } from '../../components/fields';
 import { Button } from '../../components/buttons';
@@ -22,7 +24,7 @@ export default function ResetPassword() {
     return () => window.clearTimeout(timeoutId);
   }, [isSuccess, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError('');
@@ -32,9 +34,13 @@ export default function ResetPassword() {
       return;
     }
 
-    console.log("Resetowanie hasła dla tokenu:", token, "Nowe hasło:", password);
-    
-    setIsSuccess(true);
+    try {
+      await confirmPasswordReset(auth, token, password);
+      setIsSuccess(true);
+    } catch (err) {
+      console.error("Błąd resetowania hasła:", err);
+      setError('Nie udało się zresetować hasła. Link mógł wygasnąć lub jest nieprawidłowy.');
+    }
   };
 
   return (
