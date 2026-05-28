@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../firebase/firebase';
 import './Register.css';
 import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/fields';
 import { TermsLabel } from './TermsLabel';
@@ -22,6 +25,8 @@ export default function Register() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [termsError, setTermsError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -30,17 +35,46 @@ export default function Register() {
     });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
     
     if (!termsAccepted) {
       setTermsError('Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto.');
       return;
     }
 
-    console.log("Rejestracja z tokenem:", token, "Dane:", formData);
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
 
-    navigate('/login');
+      await updateProfile(user, {
+        displayName: `${formData.firstName} ${formData.lastName}`
+      });
+
+      await setDoc(doc(db, 'users', user.uid), {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        email: formData.email,
+        role: 'resident',
+        groupId: null 
+      });
+
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      if (err.code === 'auth/email-already-in-use') {
+        setError('Podany adres email jest już w użyciu.');
+      } else if (err.code === 'auth/weak-password') {
+        setError('Hasło jest za słabe. Musi mieć co najmniej 6 znaków.');
+      } else {
+        setError('Wystąpił błąd podczas rejestracji. Spróbuj ponownie.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const closeModal = () => setActiveModal(null);
@@ -84,6 +118,8 @@ export default function Register() {
               <h2>Utwórz konto</h2>
               <p>Wypełnij poniższe dane, aby dołączyć.</p>
             </div>
+
+            {error && <div className="register-error" role="alert" style={{ color: 'red', marginBottom: 'var(--space-2, 8px)' }}>{error}</div>}
 
             <div className="form-row">
               <TextField
@@ -163,8 +199,8 @@ export default function Register() {
               </p>
             ) : null}
 
-            <Button type="submit">
-              Zarejestruj się
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Ładowanie...' : 'Zarejestruj się'}
             </Button>
 
             <div className="login-link-container">

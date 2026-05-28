@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
 import Login from './pages/login/Login';
 import ForgotPassword from './pages/forgot-password/ForgotPassword';
@@ -13,37 +13,41 @@ import Tickets from './pages/tickets/Tickets';
 import Profile from './pages/profile/Profile';
 import ForumThread from './pages/forum-thread/ForumThread';
 import AppShell from './components/layout/AppShell';
+import { AuthProvider } from './firebase/AuthContext';
 
 import './styles/variables.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/register/:token" element={<Register />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/register/:token" element={<Register />} />
 
-        <Route
-          element={
-            <ProtectedRoute>
-              <AppShell />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="finances" element={<Finances />} />
-          <Route path="tickets" element={<Tickets />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="communication">
-            <Route index element={<Communication />} />
-            <Route path="forum/:threadId" element={<ForumThread />} />
-            <Route path="chat" element={<Chat />} />
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppShell />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Dashboard />} />
+            <Route path="finances" element={<Finances />} />
+            <Route path="tickets" element={<Tickets />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="communication">
+              <Route index element={<Communication />} />
+              <Route path="forum/:threadId" element={<ForumThread />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

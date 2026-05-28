@@ -1,5 +1,8 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
+import { useAuth } from '../../firebase/AuthContext';
 import {
   DashboardIcon,
   FinanceIcon,
@@ -18,25 +21,21 @@ const navigationItems = [
   { to: '/profile', label: 'Mój Profil', icon: ProfileIcon },
 ];
 
-function getCurrentUser() {
-  try {
-    return JSON.parse(localStorage.getItem('currentUser'));
-  } catch {
-    return null;
-  }
-}
-
 export default function Navbar() {
   const navigate = useNavigate();
-  const currentUser = getCurrentUser();
-  const userName = currentUser?.name || 'Jan Kowalski';
+  const { user, userData } = useAuth();
+  const userName = userData?.firstName && userData?.lastName ? `${userData.firstName} ${userData.lastName}` : (user?.displayName || user?.email?.split('@')[0] || 'Jan Kowalski');
   const [avatarError, setAvatarError] = React.useState(false);
-  const avatarSrc = currentUser?.avatarUrl || '/profile-avatar.png';
+  const avatarSrc = user?.photoURL || '/profile-avatar.png';
   const userInitial = userName.charAt(0).toUpperCase();
 
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/login', { replace: true });
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login', { replace: true });
+    } catch (err) {
+      console.error("Błąd podczas wylogowywania:", err);
+    }
   };
 
   return (
@@ -78,7 +77,7 @@ export default function Navbar() {
             )}
           </div>
           <div className="side-nav__profile-text">
-            <span className="side-nav__profile-name">{userName}</span>
+            <span className="side-nav__profile-name">{userName} {console.log(userData)}</span>
             <span className="side-nav__profile-subtitle">Lokal nr 42</span>
           </div>
         </div>
