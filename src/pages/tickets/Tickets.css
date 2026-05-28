@@ -757,3 +757,200 @@
   font-weight: 600;
   animation: tickets-toast-in 0.2s ease;
 }
+
+/* MODAL */
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-scale-up {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.tickets-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modal-fade-in 0.25s ease;
+}
+
+.tickets-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Zwiększony odstęp między sekcjami modala */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: modal-scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tickets-modal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tickets-modal__title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tickets-modal__icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tickets-modal__icon-wrap--in-progress {
+  background: var(--icon-bg-blue);
+  color: var(--primary-blue);
+}
+.tickets-modal__icon-wrap--new {
+  background: var(--icon-bg-orange);
+  color: var(--danger-main);
+}
+.tickets-modal__icon-wrap--done {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.tickets-modal__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tickets-modal__title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tickets-modal__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tickets-modal__image-wrap {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.tickets-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tickets-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.tickets-modal__close-btn {
+  flex: none;
+  padding: 14px 32px;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+
+.tickets-modal__close-btn:hover {
+  filter: brightness(1.1);
+}
+
+.tickets-modal__close-btn--in-progress {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.tickets-modal__close-btn--new {
+  background: var(--danger-main);
+  color: white;
+}
+
+.tickets-modal__close-btn--done {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.tickets-modal__badge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.tickets-modal__badge--new {
+  background: var(--icon-bg-orange);
+  color: var(--danger-main);
+}
+
+.tickets-modal__badge--in-progress {
+  background: var(--icon-bg-orange);
+  color: var(--danger-main);
+}
+
+.tickets-modal__badge--done {
+  background: var(--border-default);
+  color: var(--text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .tickets-modal__icon-wrap--in-progress { background: var(--icon-bg-blue-transparent); color: var(--text-link); }
+  .tickets-modal__icon-wrap--new { background: var(--danger-main); color: var(--icon-bg-orange); }
+  .tickets-modal__icon-wrap--done { background: var(--bg-secondary); color: var(--text-sidebar-muted); }
+  
+  .tickets-modal__close-btn--in-progress { background: var(--primary-blue-light); }
+  .tickets-modal__close-btn--done { background: var(--border-default); color: var(--text-primary); }
+
+  .tickets-modal__badge--in-progress {
+    background: var(--danger-bg-primary);
+    color: var(--icon-bg-orange);
+  }
+  .tickets-modal__badge--new {
+    background: var(--danger-main);
+    color: var(--icon-bg-orange);
+  }
+  .tickets-modal__badge--done {
+    background: var(--border-default);
+    color: var(--text-form);
+  }
+}
