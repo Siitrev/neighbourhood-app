@@ -13,7 +13,7 @@
 .dashboard-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
@@ -40,6 +40,7 @@
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 18px;
+  line-height: 28px;
   color: var(--text-secondary);
   margin: 0;
 }

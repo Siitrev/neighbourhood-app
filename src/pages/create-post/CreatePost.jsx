@@ -137,7 +137,7 @@ export default function CreatePost() {
               </Button>
               <Button
                 type="submit"
-                className="communication-btn"
+                className="communication-btn create-post-btn"
                 disabled={!title.trim() || !content.trim()}
               >
                 Opublikuj wpis
