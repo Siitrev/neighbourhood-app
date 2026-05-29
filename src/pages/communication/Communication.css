@@ -497,3 +497,266 @@
     transition: none;
   }
 }
+
+/* ── Formularz w Communication (Nowy wpis) ── */
+
+.communication-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.communication-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.communication-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.communication-input,
+.communication-textarea,
+.communication-select {
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  border: none;
+  padding: 16px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.communication-textarea {
+  resize: none; 
+  min-height: 320px;
+}
+
+.communication-input::placeholder,
+.communication-textarea::placeholder {
+  color: var(--text-sidebar-muted);
+}
+
+.communication-input:focus,
+.communication-textarea:focus,
+.communication-select:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--primary-blue);
+}
+
+.communication-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.communication-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.communication-select-chevron {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-secondary);
+}
+
+.communication-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.communication-form-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.communication-btn--cancel {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.communication-btn--cancel:hover {
+  filter: brightness(0.95);
+}
+
+.communication-photo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--bg-secondary);
+  border: 2px dashed rgba(148, 163, 184, 0.4);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.communication-photo-btn:hover {
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+.communication-photo-btn:focus-within {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.communication-photo-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .communication-input:focus,
+  .communication-textarea:focus,
+  .communication-select:focus {
+    box-shadow: inset 0 0 0 2px var(--text-link);
+  }
+  
+  .communication-btn--cancel {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  .communication-photo-btn {
+    border-color: var(--border-default);
+  }
+
+  .communication-photo-btn:hover {
+    border-color: var(--text-link);
+    color: var(--text-link);
+  }
+}
+
+/* ── Communication Modal (Details Alert) ── */
+
+@keyframes comm-modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes comm-modal-scale-up {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.communication-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: comm-modal-fade-in 0.25s ease;
+}
+
+.communication-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: comm-modal-scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.communication-modal__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.communication-modal__title-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.communication-modal__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.communication-modal__title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.communication-modal__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.communication-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.communication-modal__actions .communication-btn {
+  flex: none;
+  width: auto;
+  min-height: 48px;
+  padding: 12px 32px;
+  border-radius: 12px;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.communication-modal__actions .communication-btn:hover {
+  filter: brightness(1.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .communication-modal__actions .communication-btn {
+    background: var(--primary-blue-light);
+  }
+}

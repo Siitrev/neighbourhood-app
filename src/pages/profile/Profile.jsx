@@ -92,7 +92,13 @@ export default function Profile() {
 
   return (
     <main className="profile-wrapper">
-      {/* ... nagłówek profilu ... */}
+       <header className="profile-header">
+        <div>
+          <h1 className="profile-title">Mój Profil</h1>
+          <p className="profile-subtitle">Zarządzaj swoimi danymi, ustawieniami bezpieczeństwa oraz preferencjami powiadomień.</p>
+        </div>
+      </header>
+      
       <div className="profile-layout">
         <div className="profile-main-col">
           <ContactDetails defaultEmail={userData.email} defaultPhone={userData.phone} />
