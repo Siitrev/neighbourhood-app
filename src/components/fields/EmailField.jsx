@@ -14,6 +14,9 @@ export default function EmailField({
   autoComplete,
   inputProps,
 }) {
+  const { className: inputClassNameProp, ...restInputProps } = inputProps || {};
+  const inputClassName = ['auth-field__input', inputClassNameProp].filter(Boolean).join(' ');
+
   return (
     <div className="auth-field">
       <label className="auth-field__label" htmlFor={id}>
@@ -25,13 +28,13 @@ export default function EmailField({
           id={id}
           name={name}
           type="email"
-          className="auth-field__input"
+          className={inputClassName}
           placeholder={placeholder}
           autoComplete={autoComplete}
           value={value}
           onChange={onChange}
           required={required}
-          {...inputProps}
+          {...restInputProps}
         />
       </div>
     </div>

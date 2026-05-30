@@ -23,6 +23,11 @@ export default function PasswordField({
 
   const [showPassword, setShowPassword] = useState(defaultShowPassword);
 
+  const { className: inputClassNameProp, ...restInputProps } = inputProps || {};
+  const inputClassName = ['auth-field__input auth-field__input--with-right-icon', inputClassNameProp]
+    .filter(Boolean)
+    .join(' ');
+
   const labelEl = (
     <label className="auth-field__label" htmlFor={inputId}>
       {label}
@@ -47,13 +52,13 @@ export default function PasswordField({
           id={inputId}
           name={name}
           type={showPassword ? 'text' : 'password'}
-          className="auth-field__input auth-field__input--with-right-icon"
+          className={inputClassName}
           placeholder={placeholder}
           autoComplete={autoComplete}
           value={value}
           onChange={onChange}
           required={required}
-          {...inputProps}
+          {...restInputProps}
         />
 
         <button

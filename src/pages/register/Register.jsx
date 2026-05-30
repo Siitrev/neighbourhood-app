@@ -27,37 +27,136 @@ export default function Register() {
   const [termsError, setTermsError] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [touchedFields, setTouchedFields] = useState({});
+
+  const getPasswordIssues = (password) => {
+    const issues = [];
+    if ((password || '').length < 8) issues.push('min. 8 znaków');
+    if (!/[A-ZĄĆĘŁŃÓŚŹŻ]/.test(password || '')) issues.push('1 wielką literę');
+    if (!/\d/.test(password || '')) issues.push('1 cyfrę');
+    if (!/[^A-Za-z0-9ĄĆĘŁŃÓŚŹŻąćęłńóśźż]/.test(password || '')) issues.push('1 znak specjalny');
+    return issues;
+  };
+
+  const formatPasswordError = (password) => {
+    const issues = getPasswordIssues(password);
+    if (issues.length === 0) return '';
+    return `Hasło musi zawierać: ${issues.join(', ')}.`;
+  };
+
+  const validateForm = (data) => {
+    const nextErrors = {};
+
+    const firstName = (data.firstName || '').trim();
+    const lastName = (data.lastName || '').trim();
+    const email = (data.email || '').trim();
+    const phone = (data.phone || '').trim();
+    const password = data.password || '';
+
+    if (!firstName) nextErrors.firstName = 'Podaj imię.';
+    else if (firstName.length < 2) nextErrors.firstName = 'Imię musi mieć co najmniej 2 znaki.';
+
+    if (!lastName) nextErrors.lastName = 'Podaj nazwisko.';
+    else if (lastName.length < 2) nextErrors.lastName = 'Nazwisko musi mieć co najmniej 2 znaki.';
+
+    if (!email) nextErrors.email = 'Podaj adres email.';
+    else if (!/^\S+@\S+\.\S+$/.test(email)) nextErrors.email = 'Podaj poprawny adres email.';
+
+    if (!phone) nextErrors.phone = 'Podaj numer telefonu.';
+    else if (!/^\+?[0-9][0-9\s-]{7,}$/.test(phone)) nextErrors.phone = 'Podaj poprawny numer telefonu.';
+
+    if (!password) nextErrors.password = 'Podaj hasło.';
+    else {
+      const pwdError = formatPasswordError(password);
+      if (pwdError) nextErrors.password = pwdError;
+    }
+
+    if (!termsAccepted) nextErrors.terms = 'Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto.';
+
+    return nextErrors;
+  };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+
+    if (error) setError('');
+
+    if (name === 'password' && touchedFields.password) {
+      const pwdError = value ? formatPasswordError(value) : 'Podaj hasło.';
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        if (pwdError) next.password = pwdError;
+        else delete next.password;
+        return next;
+      });
+      return;
+    }
+
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouchedFields((prev) => ({ ...prev, [name]: true }));
+
+    if (name === 'password') {
+      const pwdError = value ? formatPasswordError(value) : 'Podaj hasło.';
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        if (pwdError) next.password = pwdError;
+        else delete next.password;
+        return next;
+      });
+    }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
-    
-    if (!termsAccepted) {
-      setTermsError('Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto.');
+    setFieldErrors({});
+    setTermsError('');
+
+    const nextErrors = validateForm(formData);
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      if (nextErrors.terms) setTermsError(nextErrors.terms);
+      setError('Sprawdź poprawność pól w formularzu.');
       return;
     }
-
+    
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const trimmedData = {
+        ...formData,
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+      };
+
+      const userCredential = await createUserWithEmailAndPassword(auth, trimmedData.email, trimmedData.password);
       const user = userCredential.user;
 
       await updateProfile(user, {
-        displayName: `${formData.firstName} ${formData.lastName}`
+        displayName: `${trimmedData.firstName} ${trimmedData.lastName}`
       });
 
       await setDoc(doc(db, 'users', user.uid), {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phone: formData.phone,
-        email: formData.email,
+        firstName: trimmedData.firstName,
+        lastName: trimmedData.lastName,
+        phone: trimmedData.phone,
+        email: trimmedData.email,
         role: 'resident',
         groupId: null 
       });
@@ -68,7 +167,7 @@ export default function Register() {
       if (err.code === 'auth/email-already-in-use') {
         setError('Podany adres email jest już w użyciu.');
       } else if (err.code === 'auth/weak-password') {
-        setError('Hasło jest za słabe. Musi mieć co najmniej 6 znaków.');
+        setError('Hasło jest za słabe. Musi mieć min. 8 znaków oraz zawierać: 1 wielką literę, 1 cyfrę i 1 znak specjalny.');
       } else {
         setError('Wystąpił błąd podczas rejestracji. Spróbuj ponownie.');
       }
@@ -113,35 +212,68 @@ export default function Register() {
         </div>
 
         <div className="form-column">
-          <form className="register-card" onSubmit={handleRegister}>
+          <form className="register-card" onSubmit={handleRegister} noValidate>
             <div className="register-header">
               <h2>Utwórz konto</h2>
               <p>Wypełnij poniższe dane, aby dołączyć.</p>
             </div>
 
-            {error && <div className="register-error" role="alert" style={{ color: 'red', marginBottom: 'var(--space-2, 8px)' }}>{error}</div>}
+            {error ? (
+              <div className="register-alert register-alert--error" role="alert">
+                {error}
+              </div>
+            ) : null}
 
             <div className="form-row">
-              <TextField
-                id="firstName"
-                name="firstName"
-                label="Imię"
-                value={formData.firstName}
-                onChange={handleChange}
-                placeholder="Jan"
-                autoComplete="given-name"
-                required
-              />
-              <TextField
-                id="lastName"
-                name="lastName"
-                label="Nazwisko"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Kowalski"
-                autoComplete="family-name"
-                required
-              />
+              <div className="register-field-group">
+                <TextField
+                  id="firstName"
+                  name="firstName"
+                  label="Imię"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="Jan"
+                  autoComplete="given-name"
+                  required
+                  inputProps={{
+                    minLength: 2,
+                    maxLength: 60,
+                    'aria-invalid': Boolean(fieldErrors.firstName),
+                    'aria-describedby': fieldErrors.firstName ? 'firstName-error' : undefined,
+                    className: fieldErrors.firstName ? 'text-field__input--error' : undefined,
+                  }}
+                />
+                {fieldErrors.firstName ? (
+                  <p id="firstName-error" className="register-field-error">
+                    {fieldErrors.firstName}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="register-field-group">
+                <TextField
+                  id="lastName"
+                  name="lastName"
+                  label="Nazwisko"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Kowalski"
+                  autoComplete="family-name"
+                  required
+                  inputProps={{
+                    minLength: 2,
+                    maxLength: 60,
+                    'aria-invalid': Boolean(fieldErrors.lastName),
+                    'aria-describedby': fieldErrors.lastName ? 'lastName-error' : undefined,
+                    className: fieldErrors.lastName ? 'text-field__input--error' : undefined,
+                  }}
+                />
+                {fieldErrors.lastName ? (
+                  <p id="lastName-error" className="register-field-error">
+                    {fieldErrors.lastName}
+                  </p>
+                ) : null}
+              </div>
             </div>
 
             <EmailField
@@ -153,7 +285,19 @@ export default function Register() {
               placeholder="email@domena.pl"
               autoComplete="email"
               required
+              inputProps={{
+                inputMode: 'email',
+                maxLength: 254,
+                'aria-invalid': Boolean(fieldErrors.email),
+                'aria-describedby': fieldErrors.email ? 'email-error' : undefined,
+                className: fieldErrors.email ? 'auth-field__input--error' : undefined,
+              }}
             />
+            {fieldErrors.email ? (
+              <p id="email-error" className="register-field-error">
+                {fieldErrors.email}
+              </p>
+            ) : null}
 
             <PhoneField
               id="phone"
@@ -163,7 +307,19 @@ export default function Register() {
               onChange={handleChange}
               placeholder="+48 000 000 000"
               required
+              inputProps={{
+                inputMode: 'tel',
+                pattern: '^\\+?[0-9][0-9\\s-]{7,}$',
+                'aria-invalid': Boolean(fieldErrors.phone),
+                'aria-describedby': fieldErrors.phone ? 'phone-error' : undefined,
+                className: fieldErrors.phone ? 'text-field__input--error' : undefined,
+              }}
             />
+            {fieldErrors.phone ? (
+              <p id="phone-error" className="register-field-error">
+                {fieldErrors.phone}
+              </p>
+            ) : null}
 
             <PasswordField
               id="password"
@@ -174,7 +330,24 @@ export default function Register() {
               placeholder="••••••••"
               autoComplete="new-password"
               required
+              inputProps={{
+                minLength: 8,
+                pattern: '^(?=.*[A-ZĄĆĘŁŃÓŚŹŻ])(?=.*\\d)(?=.*[^A-Za-z0-9ĄĆĘŁŃÓŚŹŻąćęłńóśźż]).{8,}$',
+                onBlur: handleBlur,
+                'aria-invalid': Boolean(fieldErrors.password),
+                'aria-describedby': fieldErrors.password ? 'password-error password-hint' : 'password-hint',
+                className: fieldErrors.password ? 'auth-field__input--error' : undefined,
+              }}
             />
+            {fieldErrors.password ? (
+              <p id="password-error" className="register-field-error">
+                {fieldErrors.password}
+              </p>
+            ) : null}
+
+            <p id="password-hint" className="register-field-hint">
+              Wymagania hasła: min. 8 znaków, 1 wielka litera, 1 cyfra, 1 znak specjalny.
+            </p>
 
             <CheckboxField
               id="terms"
@@ -183,6 +356,14 @@ export default function Register() {
               onChange={(e) => {
                 setTermsAccepted(e.target.checked);
                 if (e.target.checked) setTermsError('');
+                if (error) setError('');
+                if (fieldErrors.terms) {
+                  setFieldErrors((prev) => {
+                    const next = { ...prev };
+                    delete next.terms;
+                    return next;
+                  });
+                }
               }}
               describedById={termsError ? 'terms-error' : undefined}
               label={
@@ -194,7 +375,7 @@ export default function Register() {
             />
 
             {termsError ? (
-              <p id="terms-error" className="register-error" role="alert">
+              <p id="terms-error" className="register-field-error register-terms-error" role="alert">
                 {termsError}
               </p>
             ) : null}
