@@ -5,10 +5,10 @@ import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase/firebase';
 import './Register.css';
 import { EmailField, PasswordField, CheckboxField, TextField, PhoneField } from '../../components/fields';
-import { TermsLabel } from './TermsLabel';
+import { TermsLabel } from './components/TermsLabel';
 import { Button, LinkButton } from '../../components/buttons';
 import { AuthFooter } from '../../components/footer';
-import TermsModal from './TermsModal';
+import TermsModal from './components/TermsModal';
 
 export default function Register() {
   const navigate = useNavigate();

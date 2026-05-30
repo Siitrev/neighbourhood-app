@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, getIdTokenResult } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "./firebase";
 
 const AuthContext = createContext();
@@ -17,7 +17,14 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let unsubscribeUserDoc = null;
+
     const unsub = onAuthStateChanged(auth, async (u) => {
+      if (unsubscribeUserDoc) {
+        unsubscribeUserDoc();
+        unsubscribeUserDoc = null;
+      }
+
       setUser(u);
       if (!u) {
         setRole(null);
@@ -30,24 +37,31 @@ export function AuthProvider({ children }) {
       try {
         const token = await getIdTokenResult(u, true);
         setRole(token.claims.role || "student");
-        
-        const snap = await getDoc(doc(db, "users", u.uid));
-        if (snap.exists()) {
-          const data = snap.data();
-          setGroupId(data.groupId || null);
-          setUserData(data);
-        } else {
-          setGroupId(null);
-          setUserData(null);
-        }
+
+        unsubscribeUserDoc = onSnapshot(doc(db, "users", u.uid), (snap) => {
+          if (snap.exists()) {
+            const data = snap.data();
+            setGroupId(data.groupId || null);
+            setUserData(data);
+          } else {
+            setGroupId(null);
+            setUserData(null);
+          }
+
+          setLoading(false);
+        });
       } catch (error) {
         console.error("Error fetching auth data:", error);
-      } finally {
         setLoading(false);
       }
     });
 
-    return () => unsub();
+    return () => {
+      if (unsubscribeUserDoc) {
+        unsubscribeUserDoc();
+      }
+      unsub();
+    };
   }, []);
 
   return (

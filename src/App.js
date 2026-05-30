@@ -16,12 +16,15 @@ import AppShell from './components/layout/AppShell';
 import CreatePost from './pages/create-post/CreatePost';
 import { AuthProvider } from './firebase/AuthContext';
 import ScrollToTop from './components/layout/ScrollToTop'
+import { ToastContainer } from "react-toastify";
 import './styles/variables.css';
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+      <ToastContainer position="top-right"autoClose={3000}/>
         <ScrollToTop />
         
         <Routes>

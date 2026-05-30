@@ -21,7 +21,7 @@ export default function Profile() {
 
   const userData = {
     email: user?.email || "Brak emailu",
-    phone: firestoreUser?.phone || "Brak telefonu"
+    phone: firestoreUser?.phone || firestoreUser?.phoneNumber || "Brak telefonu"
   };
 
   const [notificationPrefs, setNotificationPrefs] = React.useState(() => {
