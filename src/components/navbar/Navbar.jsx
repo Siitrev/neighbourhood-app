@@ -31,6 +31,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
+      localStorage.clear();
       await signOut(auth);
       navigate('/login', { replace: true });
     } catch (err) {

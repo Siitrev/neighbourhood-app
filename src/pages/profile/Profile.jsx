@@ -9,6 +9,12 @@ import NotificationPreferences from './components/NotificationPreferences';
 import ApartmentDetails from './components/ApartmentDetails';
 import AccountStatus from './components/AccountStatus';
 
+const DEFAULT_NOTIFICATION_PREFS = [
+  { id: 1, title: 'Ogłoszenia spółdzielni', description: 'Ważne komunikaty dotyczące budynku i osiedla.', email: true, sms: true },
+  { id: 2, title: 'Statusy zgłoszeń', description: 'Informacje o postępach w pracach technicznych.', email: true, sms: false },
+  { id: 3, title: 'Wiadomości prywatne', description: 'Powiadomienia o nowym kontakcie od administracji.', email: true, sms: false }
+];
+
 export default function Profile() {
   const { user, userData: firestoreUser, loading } = useAuth();
   const navigate = useNavigate();
@@ -18,11 +24,25 @@ export default function Profile() {
     phone: firestoreUser?.phone || "Brak telefonu"
   };
 
-  const notificationPrefs = [
-    { id: 1, title: 'Ogłoszenia spółdzielni', description: 'Ważne komunikaty dotyczące budynku i osiedla.', email: true, sms: true },
-    { id: 2, title: 'Statusy zgłoszeń', description: 'Informacje o postępach w pracach technicznych.', email: true, sms: false },
-    { id: 3, title: 'Wiadomości prywatne', description: 'Powiadomienia o nowym kontakcie od administracji.', email: true, sms: false }
-  ];
+  const [notificationPrefs, setNotificationPrefs] = React.useState(() => {
+    const saved = localStorage.getItem("notification_preferences");
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      localStorage.setItem("notification_preferences", JSON.stringify(DEFAULT_NOTIFICATION_PREFS));
+      return DEFAULT_NOTIFICATION_PREFS;
+    }
+  });
+
+  const handlePreferenceChange = (id, type) => {
+    setNotificationPrefs((prev) => {
+      const updated = prev.map((pref) =>
+        pref.id === id ? { ...pref, [type]: !pref[type] } : pref
+      );
+      localStorage.setItem("notification_preferences", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const apartmentData = {
     address: "ul. Architektów 15",
@@ -72,29 +92,22 @@ export default function Profile() {
 
   return (
     <main className="profile-wrapper">
-      <header className="profile-header">
-        <div>
-          <h1 className="profile-title">Mój Profil</h1>
-          <p className="profile-subtitle">Zarządzaj swoimi danymi, ustawieniami bezpieczeństwa oraz preferencjami powiadomień.</p>
-        </div>
-      </header>
-
+      {/* ... nagłówek profilu ... */}
       <div className="profile-layout">
-        {/* LEWA KOLUMNA: Formularze i Ustawienia */}
         <div className="profile-main-col">
-          
           <ContactDetails defaultEmail={userData.email} defaultPhone={userData.phone} />
           <SecuritySettings />
-          <NotificationPreferences preferences={notificationPrefs} />
-
+          
+          {/* Przekazujemy stan oraz funkcję obsługującą zmianę */}
+          <NotificationPreferences 
+            preferences={notificationPrefs} 
+            onPreferenceChange={handlePreferenceChange} 
+          />
         </div>
 
-        {/* PRAWA KOLUMNA: Informacje tylko do odczytu */}
         <aside className="profile-side-col">
-          
           <ApartmentDetails {...apartmentData} />
           <AccountStatus {...accountData} />
-
         </aside>
       </div>
     </main>

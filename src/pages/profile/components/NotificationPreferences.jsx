@@ -1,7 +1,7 @@
 import React from 'react';
 import { BellIcon } from '../../../components/icons';
 
-export default function NotificationPreferences({ preferences }) {
+export default function NotificationPreferences({ preferences, onPreferenceChange }) {
   return (
     <section className="profile-card">
       <header className="card-header">
@@ -20,12 +20,20 @@ export default function NotificationPreferences({ preferences }) {
             </div>
             <div className="notification-toggles">
               <label className="checkbox-label">
-                <input type="checkbox" defaultChecked={pref.email} />
+                <input 
+                  type="checkbox" 
+                  checked={pref.email} 
+                  onChange={() => onPreferenceChange(pref.id, 'email')}
+                />
                 <span className="checkbox-custom"></span>
                 EMAIL
               </label>
               <label className="checkbox-label">
-                <input type="checkbox" defaultChecked={pref.sms} />
+                <input 
+                  type="checkbox" 
+                  checked={pref.sms} 
+                  onChange={() => onPreferenceChange(pref.id, 'sms')}
+                />
                 <span className="checkbox-custom"></span>
                 SMS
               </label>

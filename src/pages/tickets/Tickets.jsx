@@ -50,7 +50,7 @@ const INITIAL_TICKETS = [
     number: "ZG-2023-042",
     date: "14 PAŹ 2023",
     status: "W REALIZACJI",
-    Icon: TicketWrenchIcon,
+    categoryType: "usterka",
     title: "Usterka oświetlenia w klatce",
     description:
       "Brak światła na 3. piętrze przy windzie. Miejsce: Klatka schodowa.",
@@ -60,7 +60,7 @@ const INITIAL_TICKETS = [
     number: "ZG-2023-045",
     date: "DZISIAJ 08:30",
     status: "NOWE",
-    Icon: WarningIcon,
+    categoryType: "awaria",
     title: "Awaria domofonu - brak sygnału",
     description: "Nie słychać dzwonka w mieszkaniu nr 4. Miejsce: Lokal.",
   },
@@ -69,7 +69,7 @@ const INITIAL_TICKETS = [
     number: "ZG-2023-039",
     date: "10 PAŹ 2023",
     status: "ZAKOŃCZONE",
-    Icon: BrushIcon,
+    categoryType: "sprzatanie",
     title: "Zanieczyszczenie na parkingu",
     description: "Rozlany olej na miejscu nr 12. Teren wspólny.",
   },
@@ -81,7 +81,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-031",
     date: "02 PAŹ 2023",
     status: "ZAKOŃCZONE",
-    Icon: TicketWrenchIcon,
+    categoryType: "usterka",
     title: "Awaria windy w bloku B",
     description:
       "Winda zatrzymuje się między piętrami. Miejsce: Klatka schodowa.",
@@ -91,7 +91,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-027",
     date: "25 WRZ 2023",
     status: "ZAKOŃCZONE",
-    Icon: BrushIcon,
+    categoryType: "sprzatanie",
     title: "Zabrudzenia na klatce schodowej",
     description:
       "Plamy na ścianie przy wejściu do bloku. Miejsce: Klatka schodowa.",
@@ -101,7 +101,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-021",
     date: "10 WRZ 2023",
     status: "ZAKOŃCZONE",
-    Icon: WarningIcon,
+    categoryType: "awaria",
     title: "Awaria oświetlenia zewnętrznego",
     description: "Nie działają lampy przy wejściu do garażu. Miejsce: Parking.",
   },
@@ -110,7 +110,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-015",
     date: "28 SIE 2023",
     status: "ZAKOŃCZONE",
-    Icon: TicketWrenchIcon,
+    categoryType: "usterka",
     title: "Uszkodzona skrzynka pocztowa",
     description:
       "Skrzynka nr 42 nie domyka się prawidłowo. Miejsce: Klatka schodowa.",
@@ -120,7 +120,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-009",
     date: "14 SIE 2023",
     status: "ZAKOŃCZONE",
-    Icon: DotsIcon,
+    categoryType: "inne",
     title: "Hałas w godzinach nocnych",
     description: "Głośna muzyka z lokalu nr 12 po 22:00. Miejsce: Lokal.",
   },
@@ -129,7 +129,7 @@ const EXTRA_TICKETS = [
     number: "ZG-2023-004",
     date: "03 SIE 2023",
     status: "ZAKOŃCZONE",
-    Icon: BrushIcon,
+    categoryType: "sprzatanie",
     title: "Wywóz odpadów wielkogabarytowych",
     description: "Stara sofa pozostawiona przy altanie śmietnikowej.",
   },
@@ -145,7 +145,13 @@ export default function Tickets() {
   const [photoName, setPhotoName] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
-  const [submittedTickets, setSubmittedTickets] = useState([]);
+  const [selectedTicket, setSelectedTicket] = useState(null); // Nowy stan dla modala
+  
+  const [submittedTickets, setSubmittedTickets] = useState(() => {
+    const saved = localStorage.getItem("submitted_tickets");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [toastVisible, setToastVisible] = useState(false);
   const photoInputRef = useRef(null);
   const toastTimerRef = useRef(null);
@@ -164,12 +170,17 @@ export default function Tickets() {
       number: `ZG-${new Date().getFullYear()}-${String(ALL_TICKETS.length + submittedTickets.length + 1).padStart(3, "0")}`,
       date: "DZISIAJ",
       status: "NOWE",
-      Icon: catConfig.Icon,
+      categoryType: selectedCategory,
       title: catConfig.title(location),
       description: description.trim().slice(0, 120),
     };
 
-    setSubmittedTickets((prev) => [newTicket, ...prev]);
+    setSubmittedTickets((prev) => {
+      const updated = [newTicket, ...prev];
+      localStorage.setItem("submitted_tickets", JSON.stringify(updated));
+      return updated;
+    });
+
     setActiveFilter("all");
     setShowMore(false);
 
@@ -198,8 +209,64 @@ export default function Tickets() {
   ).length;
   const totalCount = allDisplayTickets.length;
 
+  const selectedConfig = selectedTicket ? STATUS_CONFIG[selectedTicket.status] : null;
+  const SelectedIcon = selectedTicket ? CATEGORY_CONFIG[selectedTicket.categoryType]?.Icon : null;
+
   return (
     <main className="tickets-wrapper">
+      {selectedTicket && selectedConfig && (
+        <div 
+          className="tickets-modal-overlay" 
+          onClick={() => setSelectedTicket(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div 
+            className="tickets-modal" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="tickets-modal__header">
+              <div className="tickets-modal__title-row">
+                {SelectedIcon && (
+                  <div className={`tickets-modal__icon-wrap tickets-modal__icon-wrap--${selectedConfig.modifier}`}>
+                    <SelectedIcon width={24} height={24} />
+                  </div>
+                )}
+                <h3 className="tickets-modal__title">{selectedTicket.title}</h3>
+              </div>
+              
+              <div className="tickets-modal__meta">
+                <span className={`tickets-modal__badge tickets-modal__badge--${selectedConfig.modifier}`}>
+                  {selectedTicket.status}
+                </span>
+                <span className="tickets-item__number">#{selectedTicket.number}</span>
+                <span className="tickets-item__dot">•</span>
+                <span className="tickets-item__date">{selectedTicket.date}</span>
+              </div>
+            </div>
+            
+            <p className="tickets-modal__desc">{selectedTicket.description}</p>
+            
+            <div className="tickets-modal__image-wrap">
+              <img 
+                src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=600&auto=format&fit=crop" 
+                alt="Zdjęcie poglądowe usterki" 
+                className="tickets-modal__image" 
+              />
+            </div>
+
+            <div className="tickets-modal__actions">
+              <Button 
+                className={`tickets-modal__close-btn tickets-modal__close-btn--${selectedConfig.modifier}`} 
+                onClick={() => setSelectedTicket(null)}
+              >
+                Zamknij zgłoszenie
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="tickets-header">
         <h1 className="tickets-title">Zgłoszenia</h1>
         <p className="tickets-subtitle">
@@ -372,7 +439,8 @@ export default function Tickets() {
         >
           {visibleTickets.map((ticket) => {
             const config = STATUS_CONFIG[ticket.status];
-            const { Icon } = ticket;
+            const Icon = CATEGORY_CONFIG[ticket.categoryType]?.Icon;
+
             return (
               <li
                 key={ticket.id}
@@ -404,6 +472,7 @@ export default function Tickets() {
                 <button
                   type="button"
                   className={`tickets-item__action tickets-item__action--${config.modifier}`}
+                  onClick={() => setSelectedTicket(ticket)} // <--- OTWIERANIE MODALA
                 >
                   {config.actionLabel}
                 </button>
