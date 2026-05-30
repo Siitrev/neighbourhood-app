@@ -279,7 +279,7 @@ export default function ForumThread() {
             </div>
           )}
           {post.photo && post.id !== 'missing-cat-23322' && (
-            <div className="forum-post-image-wrap" style={{ padding: '24px', textAlign: 'center', background: 'var(--bg-secondary)', color: 'var(--text-sidebar-muted)'}}>
+            <div className="forum-post-image-wrap forum-post-image-wrap--attachment">
               [Załączono plik: {post.photo}]
             </div>
           )}
