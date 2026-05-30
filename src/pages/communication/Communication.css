@@ -462,11 +462,19 @@
   }
 
   .communication-theme-bg-danger-soft {
-    background: var(--dash-tickets-bg);
+    background-color: var(--dash-tickets-bg);
   }
 
   .communication-theme-text-danger {
     color: var(--dash-tickets-color);
+  }
+}
+
+@supports (background-color: color-mix(in srgb, #000, #fff)) {
+  @media (prefers-color-scheme: dark) {
+    .communication-theme-bg-danger-soft {
+      background-color: color-mix(in srgb, var(--danger-bg-primary) 30%, transparent);
+    }
   }
 }
 

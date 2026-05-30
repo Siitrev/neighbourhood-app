@@ -624,6 +624,10 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .tickets-new__overline {
+    color: var(--text-link);
+  }
+  
   .tickets-category-btn:focus-visible {
     outline-color: var(--text-link);
   }
@@ -724,6 +728,14 @@
 
   .tickets-wrapper .tickets-emergency__phone {
     background: var(--primary-blue-light);
+  }
+}
+
+@supports (background-color: color-mix(in srgb, #000, #fff)) {
+  @media (prefers-color-scheme: dark) {
+    .tickets-item--new .tickets-item__icon-wrap {
+      background-color: color-mix(in srgb, var(--danger-main) 30%, transparent);
+    }
   }
 }
 
