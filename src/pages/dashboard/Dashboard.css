@@ -1,3 +1,15 @@
+:root {
+  --dash-messages-color: #3E5181;
+  --dash-messages-bg: #B3C5FD;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dash-messages-color: #CCD8FF;
+    --dash-messages-bg: #324575;
+  }
+}
+
 .dashboard-wrapper {
   display: flex;
   flex-direction: column;
