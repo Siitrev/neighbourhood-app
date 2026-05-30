@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDownIcon, CameraIcon } from '../../components/icons';
 import { Button } from '../../components/buttons';
+import { useAuth } from '../../firebase/AuthContext';
 import '../communication/Communication.css';
 
 const TAGS = [
@@ -15,6 +16,7 @@ const TAGS = [
 
 export default function CreatePost() {
   const navigate = useNavigate();
+  const { user, userData } = useAuth();
   const [title, setTitle] = useState('');
   const [tag, setTag] = useState(TAGS[0]);
   const [content, setContent] = useState('');
@@ -27,19 +29,69 @@ export default function CreatePost() {
     if (file) setPhotoName(file.name);
   };
 
+  const getNameParts = () => {
+    const firstNameRaw = userData?.firstName ?? '';
+    const lastNameRaw = userData?.lastName ?? '';
+
+    if (String(firstNameRaw).trim() || String(lastNameRaw).trim()) {
+      return {
+        firstName: String(firstNameRaw).trim(),
+        lastName: String(lastNameRaw).trim(),
+      };
+    }
+
+    const displayName = user?.displayName ? String(user.displayName).trim() : '';
+    if (!displayName) {
+      return { firstName: '', lastName: '' };
+    }
+
+    const parts = displayName.split(/\s+/).filter(Boolean);
+    return {
+      firstName: parts[0] ?? '',
+      lastName: parts.slice(1).join(' '),
+    };
+  };
+
+  const formatAuthor = ({ firstName, lastName }) => {
+    const safeFirst = firstName ? firstName[0].toUpperCase() + firstName.slice(1) : '';
+    const lastInitial = lastName ? lastName.trim().charAt(0).toUpperCase() : '';
+
+    if (safeFirst && lastInitial) return `${safeFirst} ${lastInitial}.`;
+    if (safeFirst) return safeFirst;
+    return 'Ty';
+  };
+
+  const formatInitials = ({ firstName, lastName }) => {
+    const firstInitial = firstName ? firstName.trim().charAt(0) : '';
+    const lastInitial = lastName ? lastName.trim().charAt(0) : '';
+    const combined = `${firstInitial}${lastInitial}`.toUpperCase();
+    if (combined) return combined;
+
+    if (firstName) return firstName.trim().slice(0, 2).toUpperCase();
+    if (user?.email) return String(user.email).trim().slice(0, 2).toUpperCase();
+    return 'TY';
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) return;
 
+    const nameParts = getNameParts();
+    const authorLabel = formatAuthor(nameParts);
+    const initials = formatInitials(nameParts);
+
     const newPost = {
       id: `post-${Date.now()}`,
-      initials: 'TY',
+      initials,
       title: title.trim(),
-      meta: 'Ty • przed chwilą',
+      meta: `${authorLabel} • przed chwilą`,
       tag: tag,
       replies: 0,
       content: content.trim(),
-      photo: photoName 
+      photo: photoName,
+      author: authorLabel,
+      authorId: user?.uid ?? null,
+      isMine: true,
     };
 
     const saved = localStorage.getItem('forum_posts');

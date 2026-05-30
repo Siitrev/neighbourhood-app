@@ -1,5 +1,5 @@
 import React from 'react';
-import { LinkButton } from '../../components/buttons';
+import { LinkButton } from '../../../components/buttons';
 import './TermsLabel.css';
 
 export const TermsLabel = ({handleRegulations, handlePrivacy}) => {
