@@ -20,7 +20,7 @@ const ANNOUNCEMENTS = [
     id: 'water-break',
     overline: 'Wiadomość systemowa',
     title: 'Planowana przerwa w dostawie wody',
-    desc: 'W dniu 12 maja w godzinach 8:00–12:00 nastąpi przerwa...',
+    desc: 'W dniu 12 maja w godzinach 8:00–12:00 nastąpi przerwa w dostawie wody pitnej dla bloków A, B i C.\nProsimy o wcześniejsze zaopatrzenie się w wodę na ten okres.\nZa utrudnienia przepraszamy.',
     cta: 'Szczegóły',
     Icon: WaterDropIcon,
     iconSize: { width: 20, height: 25 },
@@ -29,7 +29,7 @@ const ANNOUNCEMENTS = [
     id: 'meeting',
     overline: 'Ogłoszenie',
     title: 'Zebranie Członków Spółdzielni',
-    desc: 'Zapraszamy na zebranie w dniu 25 maja o godzinie 18:00...',
+    desc: 'Zapraszamy na zebranie w dniu 25 maja o godzinie 18:00 w świetlicy przy ul. Różanej 5.\nTematem spotkania będzie omówienie planu remontów na rok 2025 oraz budżetu spółdzielni.\nObecność członków jest mile widziana.',
     cta: 'Czytaj dalej',
     Icon: GatheringIcon,
     iconSize: { width: 30, height: 15 },
@@ -38,7 +38,7 @@ const ANNOUNCEMENTS = [
     id: 'elevator',
     overline: 'Ogłoszenie',
     title: 'Przegląd windy – Blok A',
-    desc: 'W dniu 4 czerwca w godzinach 9:00–13:00 odbędzie się przegląd...',
+    desc: 'W dniu 4 czerwca w godzinach 9:00–13:00 odbędzie się obowiązkowy przegląd techniczny windy w Bloku A.\nW tym czasie winda będzie wyłączona z użytkowania.\nProsimy o uwzględnienie tego w planach dnia, szczególnie osoby starsze i z niepełnosprawnościami.',
     cta: 'Czytaj dalej',
     Icon: GatheringIcon,
     iconSize: { width: 30, height: 15 },
@@ -47,7 +47,7 @@ const ANNOUNCEMENTS = [
     id: 'parking',
     overline: 'Wiadomość systemowa',
     title: 'Zmiany w organizacji parkingu',
-    desc: 'Od 1 lipca wprowadzamy nowe oznaczenia miejsc postojowych...',
+    desc: 'Od 1 lipca wprowadzamy nowe oznaczenia miejsc postojowych na parkingu przy ul. Różanej.\nKażde miejsce zostanie przypisane do konkretnego lokalu – szczegółowy wykaz zostanie wysłany pocztą.\nSamochody zaparkowane niezgodnie z nowym podziałem mogą zostać odholowane na koszt właściciela.',
     cta: 'Szczegóły',
     Icon: WaterDropIcon,
     iconSize: { width: 20, height: 25 },
@@ -56,7 +56,7 @@ const ANNOUNCEMENTS = [
     id: 'garden',
     overline: 'Ogłoszenie',
     title: 'Prace porządkowe na terenie zielonym',
-    desc: 'W sobotę od 10:00 planowane są prace porządkowe – prosimy o ostrożność...',
+    desc: 'W sobotę od godziny 10:00 planowane są prace porządkowe na terenie zielonym wokół bloków – prosimy o ostrożność i nieutrudnianie pracy ekipie.\nZostanie przeprowadzone koszenie trawników, przycinanie żywopłotów oraz usuwanie suchych gałęzi.\nPrace potrwają do ok. godziny 15:00.',
     cta: 'Czytaj dalej',
     Icon: GatheringIcon,
     iconSize: { width: 30, height: 15 },
@@ -131,8 +131,15 @@ export default function Communication() {
   const navigate = useNavigate();
   const [showAllAnnouncements, setShowAllAnnouncements] = useState(false);
   const [showAllForum, setShowAllForum] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
-  const handleAnnouncementDetails = () => {
+  const [userPosts, setUserPosts] = useState(() => {
+    const saved = localStorage.getItem('forum_posts');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const handleAnnouncementDetails = (announcement) => {
+    setSelectedAnnouncement(announcement);
   };
 
   const handleMoreAnnouncements = () => {
@@ -144,23 +151,76 @@ export default function Communication() {
   };
 
   const handleCreatePost = () => {
+    navigate('/communication/create-post');
   };
 
-  const handleDownload = () => {
-  };
+  const handleDownload = () => {};
 
   const visibleAnnouncements = useMemo(() => {
     if (showAllAnnouncements) return ANNOUNCEMENTS;
     return ANNOUNCEMENTS.slice(0, ANNOUNCEMENTS_INITIAL);
   }, [showAllAnnouncements]);
 
+  const allForumThreads = useMemo(() => {
+    return [...userPosts, ...FORUM_THREADS];
+  }, [userPosts]);
+
   const visibleForumThreads = useMemo(() => {
-    if (showAllForum) return FORUM_THREADS;
-    return FORUM_THREADS.slice(0, FORUM_INITIAL);
-  }, [showAllForum]);
+    if (showAllForum) return allForumThreads;
+    return allForumThreads.slice(0, FORUM_INITIAL);
+  }, [showAllForum, allForumThreads]);
+
+  const ModalIcon = selectedAnnouncement ? selectedAnnouncement.Icon : null;
 
   return (
     <div className="communication-wrapper">
+      
+      {/* ── Dialog / Modal Szczegółów Ogłoszenia ── */}
+      {selectedAnnouncement && (
+        <div 
+          className="communication-modal-overlay" 
+          onClick={() => setSelectedAnnouncement(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div 
+            className="communication-modal" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="communication-modal__header">
+              <div className="communication-modal__title-row">
+                {ModalIcon && (
+                  <div className="communication-icon-tile communication-theme-bg-announcements">
+                    <ModalIcon
+                      width={selectedAnnouncement.iconSize.width}
+                      height={selectedAnnouncement.iconSize.height}
+                      className="communication-icon communication-theme-text-announcements"
+                    />
+                  </div>
+                )}
+                <div className="communication-modal__title-group">
+                  <p className="communication-overline communication-theme-text-announcements">
+                    {selectedAnnouncement.overline}
+                  </p>
+                  <h3 className="communication-modal__title">{selectedAnnouncement.title}</h3>
+                </div>
+              </div>
+            </div>
+            
+            <p className="communication-modal__desc">{selectedAnnouncement.desc}</p>
+            
+            <div className="communication-modal__actions">
+              <Button 
+                className="communication-btn" 
+                onClick={() => setSelectedAnnouncement(null)}
+              >
+                Zamknij
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="communication-header">
         <h1 className="communication-title">Komunikacja</h1>
         <p className="communication-subtitle">Bądź na bieżąco z życiem Twojej spółdzielni.</p>
@@ -178,7 +238,8 @@ export default function Communication() {
           className="communication-list"
           aria-label="Lista ogłoszeń"
         >
-          {visibleAnnouncements.map(({ id, overline, title, desc, cta, Icon, iconSize }) => {
+          {visibleAnnouncements.map((announcement) => {
+            const { id, overline, title, desc, cta, Icon, iconSize } = announcement;
             return (
               <li key={id} className="communication-anim-item">
                 <article className="communication-card">
@@ -198,7 +259,8 @@ export default function Communication() {
                     </div>
                   </div>
 
-                  <Button className="communication-btn" onClick={handleAnnouncementDetails}>
+                  {/* Przekazujemy całe ogłoszenie do funkcji przy kliknięciu */}
+                  <Button className="communication-btn" onClick={() => handleAnnouncementDetails(announcement)}>
                     {cta}
                   </Button>
                 </article>
@@ -252,7 +314,7 @@ export default function Communication() {
             </div>
           </div>
 
-          <Button className="communication-btn" onClick={() => navigate('/chat')}>
+          <Button className="communication-btn" onClick={() => navigate('/communication/chat')}>
             Otwórz czat
           </Button>
         </article>

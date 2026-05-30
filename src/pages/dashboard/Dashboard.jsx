@@ -1,10 +1,13 @@
 import React from 'react';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 import { MailIcon, FinanceIcon, TicketsIcon, CommunicationIcon } from '../../components/icons'; 
 import DashboardCard from '../../components/cards/DashboardCard';
 import DashboardBanner from '../../components/banners/DashboardBanner';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   return (
     <main className="dashboard-wrapper">
       <header className="dashboard-header">
@@ -24,6 +27,7 @@ export default function Dashboard() {
           titleIsValue={true}
           description="Termin płatności: 15.06.2026"
           buttonText="Szczegóły opłat"
+          onClick={() => navigate('/finances')}
         />
 
         {/* KARTA 2: ZGŁOSZENIA */}
@@ -37,6 +41,7 @@ export default function Dashboard() {
           title="Usterki i Naprawy"
           description="Aktualnie pracujemy nad rozwiązaniem Twoich zgłoszeń."
           buttonText="Pokaż zgłoszenia"
+          onClick={() => navigate('/tickets')}
         />
 
         {/* KARTA 3: KOMUNIKACJA */}
@@ -47,6 +52,7 @@ export default function Dashboard() {
           title="Modernizacja oświetlenia klatek"
           description="Wymiana opraw na panele LED w blokach A i B..."
           buttonText="Czytaj dalej"
+          onClick={() => navigate('/communication')}
         />
 
         {/* KARTA 4: WIADOMOŚCI */}
@@ -60,6 +66,7 @@ export default function Dashboard() {
           title="3 nieprzeczytane wiadomości"
           description="Masz nowe wiadomości od administracji budynku."
           buttonText="Otwórz wiadomości"
+          onClick={() => navigate('/communication/chat')}
         />
 
         {/* BANER DOLNY */}

@@ -13,6 +13,7 @@ import Tickets from './pages/tickets/Tickets';
 import Profile from './pages/profile/Profile';
 import ForumThread from './pages/forum-thread/ForumThread';
 import AppShell from './components/layout/AppShell';
+import CreatePost from './pages/create-post/CreatePost';
 import { AuthProvider } from './firebase/AuthContext';
 
 import './styles/variables.css';
@@ -42,6 +43,7 @@ function App() {
               <Route index element={<Communication />} />
               <Route path="forum/:threadId" element={<ForumThread />} />
               <Route path="chat" element={<Chat />} />
+              <Route path="create-post" element={<CreatePost />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
