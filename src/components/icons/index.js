@@ -37,3 +37,6 @@ export { default as GatheringIcon } from './GatheringIcon';
 export { default as PdfIcon } from './PdfIcon';
 export { default as DownloadIcon } from './DownloadIcon';
 export { default as ChatBubbleIcon } from './ChatBubbleIcon';
+export { default as  FlagIcon } from './FlagIcon';
+export { default as ShareIcon } from './ShareIcon';
+export { default as ThumbUpIcon } from './ThumbUpIcon';

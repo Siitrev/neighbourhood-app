@@ -15,13 +15,15 @@ import ForumThread from './pages/forum-thread/ForumThread';
 import AppShell from './components/layout/AppShell';
 import CreatePost from './pages/create-post/CreatePost';
 import { AuthProvider } from './firebase/AuthContext';
-
+import ScrollToTop from './components/layout/ScrollToTop'
 import './styles/variables.css';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
+        
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

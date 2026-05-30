@@ -1,9 +1,9 @@
 .profile-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
   width: 100%;
-  max-width: 1024px; /* Zgodnie z siatką Dashboardu */
+  max-width: 1024px;
   margin: 0 auto;
   box-sizing: border-box;
 
@@ -47,9 +47,30 @@
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 18px;
+  line-height: 28px;
   color: var(--text-secondary);
-  max-width: 672px;
-  margin-top: 12px;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .profile-title {
+    font-weight: 800;
+  }
+  
+  .profile-subtitle {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .profile-wrapper {
+    --profile-input-bg: var(--bg-secondary);
+    --profile-row-bg: var(--bg-main);
+    --profile-blue-card-bg: var(--primary-blue-light);
+    --profile-blue-card-text-muted: var(--icon-bg-blue);
+    --profile-verified-color: var(--text-link);
+    --bg-icon-primary: var(--icon-bg-blue-transparent);
+    --color-icon-primary: var(--text-link);
+  }
 }
 
 .profile-layout {
@@ -83,7 +104,7 @@
   gap: 32px;
   background-color: var(--bg-card);
   border: 1px solid var(--border-default);
-  border-radius: 8px;
+  border-radius: 16px;
   box-sizing: border-box;
 }
 

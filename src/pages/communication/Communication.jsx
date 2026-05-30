@@ -65,7 +65,7 @@ const ANNOUNCEMENTS = [
 
 const FORUM_THREADS = [
   {
-    id: 'missing-cat',
+    id: 'missing-cat-23322',
     initials: 'AM',
     title: 'Zaginął kot (MCO) - Blok B',
     meta: 'Anna M. • 2 godz. temu',
@@ -73,7 +73,7 @@ const FORUM_THREADS = [
     replies: 12,
   },
   {
-    id: 'plumber',
+    id: 'plumber-43423',
     initials: 'PL',
     title: 'Rekomendacja hydraulika?',
     meta: 'Piotr L. • wczoraj',
@@ -81,7 +81,7 @@ const FORUM_THREADS = [
     replies: 7,
   },
   {
-    id: 'noise',
+    id: 'noise-56564',
     initials: 'KB',
     title: 'Hałas w nocy – co robić?',
     meta: 'Kasia B. • 2 dni temu',
@@ -89,7 +89,7 @@ const FORUM_THREADS = [
     replies: 5,
   },
   {
-    id: 'bicycle',
+    id: 'bicycle-34432',
     initials: 'MT',
     title: 'Stojaki rowerowe przy wejściu',
     meta: 'Marek T. • 3 dni temu',
@@ -97,7 +97,7 @@ const FORUM_THREADS = [
     replies: 9,
   },
   {
-    id: 'playground',
+    id: 'playground-24423',
     initials: 'JG',
     title: 'Propozycje dot. placu zabaw',
     meta: 'Joanna G. • tydzień temu',
@@ -105,7 +105,7 @@ const FORUM_THREADS = [
     replies: 18,
   },
   {
-    id: 'internet',
+    id: 'internet-42442',
     initials: 'RS',
     title: 'Polecany dostawca internetu',
     meta: 'Rafał S. • tydzień temu',
@@ -162,7 +162,23 @@ export default function Communication() {
   }, [showAllAnnouncements]);
 
   const allForumThreads = useMemo(() => {
-    return [...userPosts, ...FORUM_THREADS];
+    const combined = [...userPosts, ...FORUM_THREADS];
+    
+    return combined.map(thread => {
+      const savedComments = localStorage.getItem(`forum_comments_${thread.id}`);
+      
+      if (savedComments) {
+        try {
+          const parsed = JSON.parse(savedComments);
+          return { ...thread, replies: parsed.length };
+        } catch (error) {
+          console.error("Błąd parsowania komentarzy:", error);
+          return thread;
+        }
+      }
+      
+      return thread;
+    });
   }, [userPosts]);
 
   const visibleForumThreads = useMemo(() => {
@@ -344,7 +360,7 @@ export default function Communication() {
               <button
                 type="button"
                 className="communication-forum-item"
-                onClick={() => navigate('/forum-thread')}
+                onClick={() => navigate(`/communication/forum/${id}`)}
                 aria-label={`Otwórz dyskusję: ${title}`}
               >
                 <div className="communication-card__left">

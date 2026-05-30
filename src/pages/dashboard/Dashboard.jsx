@@ -2,8 +2,8 @@ import React from 'react';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { MailIcon, FinanceIcon, TicketsIcon, CommunicationIcon } from '../../components/icons'; 
-import DashboardCard from '../../components/cards/DashboardCard';
-import DashboardBanner from '../../components/banners/DashboardBanner';
+import DashboardCard from '../dashboard/components/DashboardCard';
+import DashboardBanner from '../dashboard/components/DashboardBanner';
 
 export default function Dashboard() {
   const navigate = useNavigate();
