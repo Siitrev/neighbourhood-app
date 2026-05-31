@@ -154,7 +154,21 @@ export default function Communication() {
     navigate('/communication/create-post');
   };
 
-  const handleDownload = () => {};
+  const handleDownload = (docId) => {
+    const fileMap = {
+      'statute': '/docs/statut-neighbourhood.pdf',
+      'house-rules': '/docs/regulamin-neighbourhood.pdf',
+    };
+
+    const fileUrl = fileMap[docId];
+
+    if (!fileUrl) return;
+
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileUrl.split('/').pop();
+    link.click();
+  };
 
   const visibleAnnouncements = useMemo(() => {
     if (showAllAnnouncements) return ANNOUNCEMENTS;
@@ -434,7 +448,7 @@ export default function Communication() {
               <button
                 type="button"
                 className="communication-doc-action"
-                onClick={handleDownload}
+                onClick={() => handleDownload(id)}
                 aria-label={`Pobierz dokument: ${title}`}
               >
                 <DownloadIcon width={16} height={16} className="communication-icon" />

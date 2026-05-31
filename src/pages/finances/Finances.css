@@ -558,3 +558,167 @@ section.finances-card[aria-labelledby="heading-history"] {
     }
   }
 }
+
+.finances-paid-state {
+  align-items: center;
+  justify-content: center;
+  padding: 64px 32px;
+  gap: 16px;
+}
+
+.finances-paid-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--icon-bg-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .finances-paid-icon-wrap {
+    background: var(--icon-bg-blue-transparent);
+  }
+}
+
+/* ── Modal BLIK ── */
+@keyframes finances-modal-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.finances-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: finances-modal-in 0.25s ease;
+}
+
+.finances-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.finances-blik-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.finances-blik-input {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 12px;
+  min-height: 80px;
+}
+
+.finances-blik-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.finances-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.finances-modal-btn-cancel {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: none;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.finances-modal-btn-cancel:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+.finances-modal-btn-cancel:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.finances-modal-btn-submit {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+  /* Ustalamy sztywną wysokość, żeby idealnie pasowała do Anuluj */
+  height: 44px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.finances-modal-btn-submit:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.finances-modal-btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ── Toast (Powiadomienie po wpisaniu BLIK) ── */
+@keyframes finances-toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.finances-toast {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-active);
+  color: var(--primary-blue);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  animation: finances-toast-in 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .finances-toast {
+    background: var(--bg-secondary);
+    border-color: var(--primary-blue-light);
+    color: var(--text-link);
+  }
+}

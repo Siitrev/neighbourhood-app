@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { MailIcon, FinanceIcon, TicketsIcon, CommunicationIcon } from '../../components/icons'; 
@@ -7,6 +7,9 @@ import DashboardBanner from '../dashboard/components/DashboardBanner';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+
+  // Sprawdzamy w Local Storage czy użytkownik opłacił już rachunki
+  const [isPaid] = useState(() => localStorage.getItem('ifPaymentDone') === 'true');
 
   return (
     <main className="dashboard-wrapper">
@@ -21,11 +24,12 @@ export default function Dashboard() {
           icon={FinanceIcon}
           iconBgClass="theme-bg-finance"
           iconColorClass="theme-text-finance"
-          label="Rachunek"
+          label={isPaid ? "Status konta" : "Rachunek"}
           labelColorClass="theme-text-finance"
-          title="842,50 PLN"
+          // Zmiana wartości wyświetlanej w zależności od statusu
+          title={isPaid ? "0,00 PLN" : "842,50 PLN"}
           titleIsValue={true}
-          description="Termin płatności: 15.06.2026"
+          description={isPaid ? "Brak bieżących opłat do uregulowania." : "Termin płatności: 15.06.2026"}
           buttonText="Szczegóły opłat"
           onClick={() => navigate('/finances')}
         />
