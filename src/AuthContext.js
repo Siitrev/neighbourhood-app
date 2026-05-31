@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
         if (snap.exists()) {
           const data = snap.data();
           setGroupId(data.groupId || null);
-          setUserData(data); // Store the full Firestore document globally
+          setUserData(data);
         } else {
           setGroupId(null);
           setUserData(null);

@@ -145,7 +145,7 @@ export default function Tickets() {
   const [photoName, setPhotoName] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState(null); // Nowy stan dla modala
+  const [selectedTicket, setSelectedTicket] = useState(null);
   
   const [submittedTickets, setSubmittedTickets] = useState(() => {
     const saved = localStorage.getItem("submitted_tickets");
@@ -472,7 +472,7 @@ export default function Tickets() {
                 <button
                   type="button"
                   className={`tickets-item__action tickets-item__action--${config.modifier}`}
-                  onClick={() => setSelectedTicket(ticket)} // <--- OTWIERANIE MODALA
+                  onClick={() => setSelectedTicket(ticket)}
                 >
                   {config.actionLabel}
                 </button>

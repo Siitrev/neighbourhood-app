@@ -722,3 +722,56 @@ section.finances-card[aria-labelledby="heading-history"] {
     color: var(--text-link);
   }
 }
+
+@media (max-width: 960px) {
+  .finances-fees-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .finances-title {
+    font-size: 36px;
+  }
+  
+  .finances-card {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .finances-fees-grid,
+  .finances-pay-fields,
+  .finances-payment-options,
+  .finances-history-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .finances-pay-btn {
+    width: 100%;
+    font-size: 18px;
+    padding: 16px;
+  }
+  
+  .finances-paid-state {
+    padding: 48px 24px;
+  }
+
+  .finances-modal {
+    padding: 24px;
+  }
+  
+  .finances-blik-input {
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+    min-height: 64px;
+  }
+  
+  .finances-modal-actions {
+    flex-direction: column;
+  }
+  
+  .finances-modal-actions button {
+    width: 100%;
+  }
+}

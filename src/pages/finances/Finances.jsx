@@ -13,7 +13,7 @@ import {
   ShieldCheckIcon,
   ReceiptIcon,
   ChevronDownIcon,
-  CheckIcon, // Dodajemy CheckIcon do modala i pustego stanu
+  CheckIcon,
 } from '../../components/icons';
 import { Button } from '../../components/buttons';
 
@@ -49,7 +49,6 @@ export default function Finances() {
   const [paymentMethod, setPaymentMethod] = useState("blik");
   const [showMore, setShowMore] = useState(false);
   
-  // Stany logiki płatności
   const [isPaid, setIsPaid] = useState(() => localStorage.getItem('ifPaymentDone') === 'true');
   const [showBlikModal, setShowBlikModal] = useState(false);
   const [blikCode, setBlikCode] = useState('');
@@ -71,20 +70,17 @@ export default function Finances() {
     
     setIsProcessing(true);
     
-    // Symulacja ładowania płatności przez 2 sekundy
     setTimeout(() => {
       setIsProcessing(false);
       setShowBlikModal(false);
       setIsPaid(true);
       localStorage.setItem('ifPaymentDone', 'true');
       
-      // Pokazujemy powiadomienie toast
       setShowToast(true);
       setTimeout(() => setShowToast(false), 4000);
     }, 2000);
   };
 
-  // Łączymy historię i dodajemy dzisiejszą transakcję, jeśli isPaid jest true
   const visibleHistory = useMemo(() => {
     let history = showMore ? [...HISTORY_INITIAL, ...HISTORY_EXTRA] : [...HISTORY_INITIAL];
     
@@ -135,7 +131,6 @@ export default function Finances() {
                 disabled={isProcessing}
                 value={blikCode}
                 onChange={(e) => {
-                  // Usuń wszystko co nie jest cyfrą
                   const val = e.target.value.replace(/\D/g, '');
                   setBlikCode(val);
                 }}
@@ -152,7 +147,6 @@ export default function Finances() {
                 </Button>
                 <Button 
                   type="submit" 
-                  // Zmieniamy klasę na dedykowaną dla modala zamiast wyciągać ją z głównego ekranu
                   className="finances-modal-btn-submit" 
                   disabled={blikCode.length !== 6 || isProcessing}
                 >

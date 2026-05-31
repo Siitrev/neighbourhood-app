@@ -163,6 +163,7 @@
 .form-group {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 8px;
   flex: 1;
 }
@@ -457,4 +458,56 @@
   line-height: 1.33;
   color: var(--text-secondary);
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .profile-title {
+    font-size: 36px;
+  }
+
+  .profile-layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .profile-main-col,
+  .profile-side-col {
+    width: 100%;
+  }
+
+  .profile-card {
+    padding: 24px;
+    gap: 24px;
+  }
+
+  .blue-card {
+    padding: 24px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-actions {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .profile-btn {
+    width: 100% !important;
+  }
+
+  .notification-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .notification-toggles {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 24px;
+  }
 }
