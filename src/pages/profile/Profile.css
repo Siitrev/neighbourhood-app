@@ -7,7 +7,6 @@
   margin: 0 auto;
   box-sizing: border-box;
 
-  /* Lokalne aliasy dla formularzy i kart powiadomień */
   --profile-input-bg: #E1E3E4;
   --profile-row-bg: linear-gradient(0deg, #F3F4F5, #F3F4F5), #FFFFFF;
   --profile-blue-card-bg: var(--primary-blue);

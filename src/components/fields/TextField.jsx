@@ -11,8 +11,18 @@ export default function TextField({
   placeholder,
   autoComplete,
   required,
-  iconLeft
+  iconLeft,
+  inputProps,
 }) {
+  const { className: inputClassNameProp, ...restInputProps } = inputProps || {};
+  const inputClassName = [
+    'text-field__input',
+    iconLeft ? 'text-field__input--with-icon' : '',
+    inputClassNameProp,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <div className="text-field">
       <div className="text-field__label-row">
@@ -26,12 +36,13 @@ export default function TextField({
           id={id}
           name={name}
           type={type}
-          className={`text-field__input ${iconLeft ? 'text-field__input--with-icon' : ''}`}
+          className={inputClassName}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
           autoComplete={autoComplete}
           required={required}
+          {...restInputProps}
         />
       </div>
     </div>

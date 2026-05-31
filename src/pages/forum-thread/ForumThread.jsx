@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/buttons';
 import { ChatBubbleIcon, FlagIcon, ThumbUpIcon, ShareIcon } from '../../components/icons';
+import { useAuth } from '../../firebase/AuthContext';
 import '../communication/Communication.css';
 
 const FORUM_THREADS = [
@@ -37,6 +38,7 @@ const generateRandomComments = (count) => {
 export default function ForumThread() {
   const { threadId } = useParams();
   const navigate = useNavigate();
+  const { user, userData } = useAuth();
   
   const commentInputRef = useRef(null);
   
@@ -55,12 +57,82 @@ export default function ForumThread() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
+  const getNameParts = () => {
+    const firstNameRaw = userData?.firstName ?? '';
+    const lastNameRaw = userData?.lastName ?? '';
+
+    if (String(firstNameRaw).trim() || String(lastNameRaw).trim()) {
+      return {
+        firstName: String(firstNameRaw).trim(),
+        lastName: String(lastNameRaw).trim(),
+      };
+    }
+
+    const displayName = user?.displayName ? String(user.displayName).trim() : '';
+    if (!displayName) {
+      return { firstName: '', lastName: '' };
+    }
+
+    const parts = displayName.split(/\s+/).filter(Boolean);
+    return {
+      firstName: parts[0] ?? '',
+      lastName: parts.slice(1).join(' '),
+    };
+  };
+
+  const formatAuthor = ({ firstName, lastName }) => {
+    const safeFirst = firstName ? firstName[0].toUpperCase() + firstName.slice(1) : '';
+    const lastInitial = lastName ? lastName.trim().charAt(0).toUpperCase() : '';
+
+    if (safeFirst && lastInitial) return `${safeFirst} ${lastInitial}.`;
+    if (safeFirst) return safeFirst;
+    return 'Ty';
+  };
+
+  const formatInitials = ({ firstName, lastName }) => {
+    const firstInitial = firstName ? firstName.trim().charAt(0) : '';
+    const lastInitial = lastName ? lastName.trim().charAt(0) : '';
+    const combined = `${firstInitial}${lastInitial}`.toUpperCase();
+    if (combined) return combined;
+
+    if (firstName) return firstName.trim().slice(0, 2).toUpperCase();
+    if (user?.email) return String(user.email).trim().slice(0, 2).toUpperCase();
+    return 'TY';
+  };
+
+  const nameParts = getNameParts();
+  const myAuthorLabel = formatAuthor(nameParts);
+  const myInitials = formatInitials(nameParts);
+
   useEffect(() => {
     if (!post) return;
 
     const savedComments = localStorage.getItem(`forum_comments_${threadId}`);
     if (savedComments) {
-      setComments(JSON.parse(savedComments));
+      try {
+        const parsed = JSON.parse(savedComments);
+        const upgraded = Array.isArray(parsed)
+          ? parsed.map((c) => {
+              const isMineByUid = Boolean(user?.uid && c?.authorId && c.authorId === user.uid);
+              const isLegacyMine = c?.author === 'Ty' && c?.initials === 'TY';
+              const isMine = Boolean(c?.isMine || isMineByUid || isLegacyMine);
+
+              return isMine
+                ? {
+                    ...c,
+                    isMine: true,
+                    authorId: user?.uid ?? c?.authorId ?? null,
+                    author: myAuthorLabel,
+                    initials: myInitials,
+                  }
+                : c;
+            })
+          : [];
+
+        setComments(upgraded);
+      } catch {
+        setComments([]);
+      }
     } else {
       const newComments = generateRandomComments(post.replies || 0);
       setComments(newComments);
@@ -87,8 +159,10 @@ export default function ForumThread() {
 
     const newComment = {
       id: Date.now(),
-      initials: 'TY',
-      author: 'Ty',
+      initials: myInitials,
+      author: myAuthorLabel,
+      authorId: user?.uid ?? null,
+      isMine: true,
       time: 'przed chwilą',
       content: newCommentText.trim(),
     };
@@ -205,7 +279,7 @@ export default function ForumThread() {
             </div>
           )}
           {post.photo && post.id !== 'missing-cat-23322' && (
-            <div className="forum-post-image-wrap" style={{ padding: '24px', textAlign: 'center', background: 'var(--bg-secondary)', color: 'var(--text-sidebar-muted)'}}>
+            <div className="forum-post-image-wrap forum-post-image-wrap--attachment">
               [Załączono plik: {post.photo}]
             </div>
           )}
@@ -237,7 +311,7 @@ export default function ForumThread() {
         </div>
 
         <div className="communication-card forum-comment-add">
-          <div className="communication-avatar">TY</div>
+          <div className="communication-avatar">{myInitials}</div>
           <form className="forum-comment-form" onSubmit={handleAddComment}>
             <textarea
               ref={commentInputRef}

@@ -8,6 +8,16 @@
   padding: 48px 24px;
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
+
+  --register-error-color: var(--danger-main);
+  --register-error-border: var(--danger-main);
+}
+
+@media (prefers-color-scheme: dark) {
+  .register-page {
+    --register-error-color: var(--dash-tickets-color);
+    --register-error-border: var(--dash-tickets-color);
+  }
 }
 
 .register-content {
@@ -137,6 +147,14 @@
   gap: 16px;
 }
 
+.register-field-group {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 /* --- LINK DO LOGOWANIA --- */
 .login-link-container {
   border-top: 1px solid var(--border-default);
@@ -156,7 +174,51 @@
   margin: 0;
   font-size: 14px;
   line-height: 1.5;
-  color: var(--text-primary);
+  color: var(--register-error-color);
+}
+
+.register-alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.register-alert--error {
+  border-color: var(--register-error-border);
+  color: var(--register-error-color);
+}
+
+@supports (background: color-mix(in srgb, black, white)) {
+  .register-alert--error {
+    background: color-mix(in srgb, var(--register-error-border) 10%, var(--bg-card));
+  }
+}
+
+.register-field-error {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--register-error-color);
+}
+
+.register-terms-error {
+  margin-top: -6px;
+  margin-left: 36px;
+}
+
+.register-field-hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.register-card .auth-field__input--error,
+.register-card .text-field__input--error {
+  border-color: var(--register-error-border);
 }
 
 /* --- RESPONSIVE DESIGN --- */
