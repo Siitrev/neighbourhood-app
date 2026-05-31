@@ -131,7 +131,6 @@
   font-weight: 700;
 }
 
-/* Ikony i Media */
 .dashboard-wrapper .card-icon-box {
   display: flex;
   justify-content: center;
@@ -139,6 +138,7 @@
   width: 64px;
   height: 64px;
   border-radius: 12px;
+  flex-shrink: 0;
 }
 
 .dashboard-wrapper .card-icon {
@@ -171,6 +171,7 @@
   border-radius: 12px;
   background-color: var(--bg-secondary);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .announcement-image {
@@ -229,5 +230,47 @@
   .card-badge-status {
     background: var(--danger-main);
     color: var(--icon-bg-orange);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-welcome {
+    font-size: 32px;
+  }
+  
+  .dashboard-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .card-main-content {
+    padding-right: 0;
+  }
+
+  .dashboard-action-btn {
+    width: fit-content;
+    align-self: flex-end;
+  }
+  
+  .dashboard-banner {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-main-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .card-value {
+    font-size: 28px;
+  }
+
+  .card-headline {
+    font-size: 20px;
   }
 }

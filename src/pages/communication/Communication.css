@@ -506,8 +506,6 @@
   }
 }
 
-/* ── Formularz w Communication (Nowy wpis) ── */
-
 .communication-form {
   display: flex;
   flex-direction: column;
@@ -664,8 +662,6 @@
   }
 }
 
-/* ── Communication Modal (Details Alert) ── */
-
 @keyframes comm-modal-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -768,8 +764,6 @@
     background: var(--primary-blue-light);
   }
 }
-
-/* ── Widok Wątku na Forum (ForumThread.jsx) ── */
 
 .forum-thread-wrapper {
   gap: 24px;
@@ -923,8 +917,6 @@
 .forum-action-btn:hover {
   color: var(--text-primary);
 }
-
-/* Sekcja Komentarzy */
 
 .forum-comments-section {
   display: flex;
@@ -1081,14 +1073,128 @@
   filter: brightness(1.12);
 }
 
-/* ── STYL DLA ZABLOKOWANEGO PRZYCISKU (disabled) ── */
 .create-post-btn:disabled {
   opacity: 0.65;
   cursor: not-allowed;
 }
 
-/* Focus dla ułatwień dostępu */
 .create-post-btn:focus-visible {
   outline: 2px solid var(--primary-blue);
   outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .communication-title {
+    font-size: 36px;
+  }
+
+  .communication-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+    gap: 16px;
+    height: auto;
+  }
+
+  .communication-card__left {
+    align-items: flex-start;
+  }
+
+  .communication-btn:not(.communication-btn--compact) {
+    width: 100% !important;
+    flex: none;
+    margin-top: 8px;
+  }
+
+  .communication-section__header {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .communication-btn--compact {
+    width: auto !important;
+    margin-top: 0;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .communication-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .communication-form-buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .communication-form-buttons .communication-btn {
+    flex: 1;
+    margin-top: 0;
+  }
+
+  .communication-photo-btn {
+    max-width: 100%;
+  }
+
+  .communication-forum-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .communication-forum-stats {
+    padding-top: 16px;
+    border-top: 1px solid var(--border-default);
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .communication-docs__row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .communication-doc-action {
+    width: 100%;
+  }
+
+  .communication-modal {
+    padding: 24px;
+  }
+
+  .communication-modal__actions .communication-btn {
+    width: 100%;
+  }
+
+  .forum-post-main {
+    padding: 24px;
+  }
+
+  .forum-post-actions {
+    flex-wrap: wrap;
+  }
+
+  .forum-action-btn {
+    flex: 1 1 calc(50% - 12px);
+    justify-content: center;
+    padding: 12px 0;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+  }
+
+  .forum-comment-add {
+    flex-direction: column;
+  }
+
+  .forum-comment-submit-wrap {
+    justify-content: stretch;
+  }
+  
+  .forum-comment-btn {
+    width: 100%;
+  }
 }

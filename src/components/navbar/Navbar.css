@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
   width: 256px;
   height: 100vh;
   position: sticky;
@@ -13,6 +12,25 @@
   background: var(--bg-sidebar);
   border-right: 1px solid var(--border-default);
   flex-shrink: 0;
+  z-index: 100;
+}
+
+/* W desktopie kontenery układają się naturalnie */
+.side-nav__top-bar {
+  display: contents; 
+}
+.side-nav__collapse {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.side-nav__hamburger {
+  display: none; /* Ukryte na desktopie */
+}
+
+.side-nav__brand-text {
+  display: none; /* Ukryte na desktopie, widać tylko logo */
 }
 
 .side-nav__brand {
@@ -184,10 +202,95 @@
   font-weight: 400;
 }
 
+/* =========================================
+   RESPONSYWNOŚĆ MOBILNA
+========================================= */
+@media (max-width: 960px) {
+  .side-nav {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 16px 24px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-default);
+    overflow: visible; /* Menu wyjedzie "na zewnątrz" */
+  }
+
+  .side-nav__top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .side-nav__brand {
+    padding-bottom: 0;
+    width: auto;
+  }
+
+  .side-nav__logo {
+    display: none; /* Chowanie logo SVG na mobile */
+  }
+
+  .side-nav__brand-text {
+    display: block; 
+    /* Czcionka zbliżona do logo z pliku image_89057c.png */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.75rem;
+    /* Charakterystyczny granatowy kolor z obrazka */
+    color: #0F428B; 
+    letter-spacing: -0.5px;
+  }
+
+  .side-nav__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 4px;
+    transition: opacity 0.15s ease;
+  }
+  
+  .side-nav__hamburger:hover {
+    opacity: 0.7;
+  }
+
+  /* Rozwijane menu nakładające się na treść */
+  .side-nav__collapse {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-sidebar);
+    padding: 16px 24px 24px 24px;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border-default);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .side-nav__collapse--open {
+    display: flex; /* Zastępuje klasę display: none */
+  }
+
+  .side-nav__bottom {
+    border-top-color: var(--border-default);
+    padding-top: 16px;
+  }
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
 @media (prefers-color-scheme: dark) {
   .side-nav {
     background: #0D0F11;
     border-right-color: #424654;
+    border-bottom-color: #424654;
   }
 
   .side-nav__link {
@@ -227,5 +330,18 @@
 
   .side-nav__logout:hover {
     background: rgba(255, 180, 171, 0.08);
+  }
+
+  /* Rozszerzenia Dark Mode dla mobilki */
+  @media (max-width: 960px) {
+    .side-nav__brand-text {
+      color: #0063db;
+    }
+    
+    .side-nav__collapse {
+      background: #0D0F11;
+      border-bottom-color: #424654;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
   }
 }

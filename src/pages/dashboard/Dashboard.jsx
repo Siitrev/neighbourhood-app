@@ -8,7 +8,6 @@ import DashboardBanner from '../dashboard/components/DashboardBanner';
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  // Sprawdzamy w Local Storage czy użytkownik opłacił już rachunki
   const [isPaid] = useState(() => localStorage.getItem('ifPaymentDone') === 'true');
 
   return (
@@ -26,7 +25,6 @@ export default function Dashboard() {
           iconColorClass="theme-text-finance"
           label={isPaid ? "Status konta" : "Rachunek"}
           labelColorClass="theme-text-finance"
-          // Zmiana wartości wyświetlanej w zależności od statusu
           title={isPaid ? "0,00 PLN" : "842,50 PLN"}
           titleIsValue={true}
           description={isPaid ? "Brak bieżących opłat do uregulowania." : "Termin płatności: 15.06.2026"}
