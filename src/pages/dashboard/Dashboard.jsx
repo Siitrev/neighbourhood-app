@@ -1,19 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
-import { MailIcon, FinanceIcon, TicketsIcon, CommunicationIcon } from '../../components/icons'; 
+import { MailIcon, FinanceIcon, TicketsIcon, CommunicationIcon } from '../../components/icons';
 import DashboardCard from '../dashboard/components/DashboardCard';
 import DashboardBanner from '../dashboard/components/DashboardBanner';
+import { useAuth } from '../../firebase/AuthContext';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { user, userData } = useAuth();
+
+  const firstName = useMemo(() => {
+    if (userData?.firstName) return userData.firstName;
+    if (user?.displayName) return user.displayName.split(' ')[0];
+    return 'Mieszkańcu';
+  }, [user, userData]);
 
   const [isPaid] = useState(() => localStorage.getItem('ifPaymentDone') === 'true');
+
+  const [unreadCount] = useState(() => {
+    const stored = localStorage.getItem('chat_unread_count');
+    return stored !== null ? parseInt(stored, 10) : 1;
+  });
+
+  const [activeTicketCount] = useState(() => {
+    const BASE_ACTIVE = 2;
+    const stored = localStorage.getItem('submitted_tickets');
+    if (!stored) return BASE_ACTIVE;
+    try {
+      return BASE_ACTIVE + JSON.parse(stored).length;
+    } catch {
+      return BASE_ACTIVE;
+    }
+  });
 
   return (
     <main className="dashboard-wrapper">
       <header className="dashboard-header">
-        <h1 className="dashboard-welcome">Dzień dobry, Janie.</h1>
+        <h1 className="dashboard-welcome">Dzień dobry, {firstName}.</h1>
         <p className="dashboard-info">Oto przegląd Twojego mieszkania na dziś.</p>
       </header>
 
@@ -39,7 +63,7 @@ export default function Dashboard() {
           iconColorClass="theme-text-tickets"
           label="Twoje zgłoszenia"
           labelColorClass="theme-text-tickets"
-          badgeText="2 AKTYWNE"
+          badgeText={`${activeTicketCount} AKTYWNE`}
           title="Usterki i Naprawy"
           description="Aktualnie pracujemy nad rozwiązaniem Twoich zgłoszeń."
           buttonText="Pokaż zgłoszenia"
@@ -62,11 +86,19 @@ export default function Dashboard() {
           icon={MailIcon}
           iconBgClass="theme-bg-messages position-relative"
           iconColorClass="theme-text-messages"
-          notificationCount={3}
+          notificationCount={unreadCount > 0 ? unreadCount : undefined}
           label="Skrzynka odbiorcza"
           labelColorClass="theme-text-finance"
-          title="3 nieprzeczytane wiadomości"
-          description="Masz nowe wiadomości od administracji budynku."
+          title={
+            unreadCount === 0
+              ? 'Brak nowych wiadomości'
+              : `${unreadCount} nieprzeczytana wiadomość`
+          }
+          description={
+            unreadCount === 0
+              ? 'Wszystkie wiadomości zostały przeczytane.'
+              : 'Masz nowe wiadomości od administracji budynku.'
+          }
           buttonText="Otwórz wiadomości"
           onClick={() => navigate('/communication/chat')}
         />

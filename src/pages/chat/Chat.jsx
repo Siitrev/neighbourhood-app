@@ -129,7 +129,7 @@ export default function Chat() {
         {}
         <div className="chat-topbar">
           <div className="chat-topbar__avatar" aria-hidden="true">A</div>
-          <span className="chat-topbar__name">Administracja | Biuro obsługi</span>
+          <span className="chat-topbar__name">Administracja | Biuro Obsługi</span>
         </div>
 
         {}

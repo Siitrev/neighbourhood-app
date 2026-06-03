@@ -11,6 +11,7 @@ import {
   ChatBubbleIcon,
 } from '../../components/icons';
 import { Button } from '../../components/buttons';
+import { useAuth } from '../../firebase/AuthContext';
 
 const ANNOUNCEMENTS_INITIAL = 2;
 const FORUM_INITIAL = 2;
@@ -64,79 +65,54 @@ const ANNOUNCEMENTS = [
 ];
 
 const FORUM_THREADS = [
-  {
-    id: 'missing-cat-23322',
-    initials: 'AM',
-    title: 'Zaginął kot (MCO) - Blok B',
-    meta: 'Anna M. • 2 godz. temu',
-    tag: 'Zwierzęta',
-    replies: 12,
-  },
-  {
-    id: 'plumber-43423',
-    initials: 'PL',
-    title: 'Rekomendacja hydraulika?',
-    meta: 'Piotr L. • wczoraj',
-    tag: 'Usługi',
-    replies: 7,
-  },
-  {
-    id: 'noise-56564',
-    initials: 'KB',
-    title: 'Hałas w nocy – co robić?',
-    meta: 'Kasia B. • 2 dni temu',
-    tag: 'Porządek',
-    replies: 5,
-  },
-  {
-    id: 'bicycle-34432',
-    initials: 'MT',
-    title: 'Stojaki rowerowe przy wejściu',
-    meta: 'Marek T. • 3 dni temu',
-    tag: 'Infrastruktura',
-    replies: 9,
-  },
-  {
-    id: 'playground-24423',
-    initials: 'JG',
-    title: 'Propozycje dot. placu zabaw',
-    meta: 'Joanna G. • tydzień temu',
-    tag: 'Sąsiedzi',
-    replies: 18,
-  },
-  {
-    id: 'internet-42442',
-    initials: 'RS',
-    title: 'Polecany dostawca internetu',
-    meta: 'Rafał S. • tydzień temu',
-    tag: 'Usługi',
-    replies: 21,
-  },
+  { id: 'missing-cat-23322', initials: 'AM', title: 'Zaginął kot (MCO) - Blok B',       meta: 'Anna M. • 2 godz. temu',   tag: 'Zwierzęta',     replies: 12 },
+  { id: 'plumber-43423',     initials: 'PL', title: 'Rekomendacja hydraulika?',          meta: 'Piotr L. • wczoraj',        tag: 'Usługi',        replies: 7  },
+  { id: 'noise-56564',       initials: 'KB', title: 'Hałas w nocy – co robić?',          meta: 'Kasia B. • 2 dni temu',     tag: 'Porządek',      replies: 5  },
+  { id: 'bicycle-34432',     initials: 'MT', title: 'Stojaki rowerowe przy wejściu',     meta: 'Marek T. • 3 dni temu',     tag: 'Infrastruktura',replies: 9  },
+  { id: 'playground-24423',  initials: 'JG', title: 'Propozycje dot. placu zabaw',       meta: 'Joanna G. • tydzień temu',  tag: 'Sąsiedzi',      replies: 18 },
+  { id: 'internet-42442',    initials: 'RS', title: 'Polecany dostawca internetu',       meta: 'Rafał S. • tydzień temu',   tag: 'Usługi',        replies: 21 },
 ];
 
 const DOCUMENTS = [
-  {
-    id: 'statute',
-    title: 'Statut Spółdzielni „Neighbourhood”',
-    meta: 'PDF • 2.3 MB',
-  },
-  {
-    id: 'house-rules',
-    title: 'Regulamin Porządku Domowego',
-    meta: 'PDF • 1.1 MB',
-  },
+  { id: 'statute',     title: 'Statut Spółdzielni „Neighbourhood"', meta: 'PDF • 2.3 MB' },
+  { id: 'house-rules', title: 'Regulamin Porządku Domowego',        meta: 'PDF • 1.1 MB' },
 ];
+
+const FALLBACK_PREVIEW = 'Szanowny Panie, informujemy że serwisant został już wezwany...';
 
 export default function Communication() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
   const [showAllAnnouncements, setShowAllAnnouncements] = useState(false);
-  const [showAllForum, setShowAllForum] = useState(false);
+  const [showAllForum, setShowAllForum]                 = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
   const [userPosts, setUserPosts] = useState(() => {
     const saved = localStorage.getItem('forum_posts');
     return saved ? JSON.parse(saved) : [];
   });
+
+  const [unreadCount] = useState(() => {
+    const stored = localStorage.getItem('chat_unread_count');
+    return stored !== null ? parseInt(stored, 10) : 1;
+  });
+
+  const chatPreview = useMemo(() => {
+    const key = user?.uid
+      ? `neighbourhood_chat_messages_${user.uid}`
+      : 'neighbourhood_chat_messages';
+    const stored = localStorage.getItem(key);
+    if (!stored) return FALLBACK_PREVIEW;
+    try {
+      const messages = JSON.parse(stored);
+      if (!Array.isArray(messages) || messages.length === 0) return FALLBACK_PREVIEW;
+      const text = messages[messages.length - 1].text ?? '';
+      return text.length > 60 ? `${text.slice(0, 60)}...` : text;
+    } catch {
+      return FALLBACK_PREVIEW;
+    }
+  }, [user?.uid]);
 
   const handleAnnouncementDetails = (announcement) => {
     setSelectedAnnouncement(announcement);
@@ -156,14 +132,11 @@ export default function Communication() {
 
   const handleDownload = (docId) => {
     const fileMap = {
-      'statute': '/docs/statut-neighbourhood.pdf',
+      'statute':     '/docs/statut-neighbourhood.pdf',
       'house-rules': '/docs/regulamin-neighbourhood.pdf',
     };
-
     const fileUrl = fileMap[docId];
-
     if (!fileUrl) return;
-
     const link = document.createElement('a');
     link.href = fileUrl;
     link.download = fileUrl.split('/').pop();
@@ -177,20 +150,17 @@ export default function Communication() {
 
   const allForumThreads = useMemo(() => {
     const combined = [...userPosts, ...FORUM_THREADS];
-    
     return combined.map(thread => {
       const savedComments = localStorage.getItem(`forum_comments_${thread.id}`);
-      
       if (savedComments) {
         try {
           const parsed = JSON.parse(savedComments);
           return { ...thread, replies: parsed.length };
         } catch (error) {
-          console.error("Błąd parsowania komentarzy:", error);
+          console.error('Błąd parsowania komentarzy:', error);
           return thread;
         }
       }
-      
       return thread;
     });
   }, [userPosts]);
@@ -204,19 +174,16 @@ export default function Communication() {
 
   return (
     <div className="communication-wrapper">
-      
-      {/* ── Dialog / Modal Szczegółów Ogłoszenia ── */}
+
+      {}
       {selectedAnnouncement && (
-        <div 
-          className="communication-modal-overlay" 
+        <div
+          className="communication-modal-overlay"
           onClick={() => setSelectedAnnouncement(null)}
           role="dialog"
           aria-modal="true"
         >
-          <div 
-            className="communication-modal" 
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="communication-modal" onClick={(e) => e.stopPropagation()}>
             <div className="communication-modal__header">
               <div className="communication-modal__title-row">
                 {ModalIcon && (
@@ -236,14 +203,9 @@ export default function Communication() {
                 </div>
               </div>
             </div>
-            
             <p className="communication-modal__desc">{selectedAnnouncement.desc}</p>
-            
             <div className="communication-modal__actions">
-              <Button 
-                className="communication-btn" 
-                onClick={() => setSelectedAnnouncement(null)}
-              >
+              <Button className="communication-btn" onClick={() => setSelectedAnnouncement(null)}>
                 Zamknij
               </Button>
             </div>
@@ -256,6 +218,7 @@ export default function Communication() {
         <p className="communication-subtitle">Bądź na bieżąco z życiem Twojej spółdzielni.</p>
       </header>
 
+      {}
       <section className="communication-section" aria-labelledby="communication-announcements-title">
         <div className="communication-section__header">
           <h2 id="communication-announcements-title" className="communication-section__title">
@@ -263,11 +226,7 @@ export default function Communication() {
           </h2>
         </div>
 
-        <ul
-          id="communication-announcements-list"
-          className="communication-list"
-          aria-label="Lista ogłoszeń"
-        >
+        <ul id="communication-announcements-list" className="communication-list" aria-label="Lista ogłoszeń">
           {visibleAnnouncements.map((announcement) => {
             const { id, overline, title, desc, cta, Icon, iconSize } = announcement;
             return (
@@ -275,21 +234,14 @@ export default function Communication() {
                 <article className="communication-card">
                   <div className="communication-card__left">
                     <div className="communication-icon-tile communication-theme-bg-announcements">
-                      <Icon
-                        width={iconSize.width}
-                        height={iconSize.height}
-                        className="communication-icon communication-theme-text-announcements"
-                      />
+                      <Icon width={iconSize.width} height={iconSize.height} className="communication-icon communication-theme-text-announcements" />
                     </div>
-
                     <div className="communication-card__content">
                       <p className="communication-overline communication-theme-text-announcements">{overline}</p>
                       <h3 className="communication-card__title">{title}</h3>
                       <p className="communication-card__desc">{desc}</p>
                     </div>
                   </div>
-
-                  {/* Przekazujemy całe ogłoszenie do funkcji przy kliknięciu */}
                   <Button className="communication-btn" onClick={() => handleAnnouncementDetails(announcement)}>
                     {cta}
                   </Button>
@@ -301,25 +253,15 @@ export default function Communication() {
 
         {ANNOUNCEMENTS.length > ANNOUNCEMENTS_INITIAL && (
           <div className="communication-more">
-            <button
-              type="button"
-              className="communication-more__btn"
-              onClick={handleMoreAnnouncements}
-              aria-controls="communication-announcements-list"
-              aria-expanded={showAllAnnouncements}
-            >
+            <button type="button" className="communication-more__btn" onClick={handleMoreAnnouncements} aria-controls="communication-announcements-list" aria-expanded={showAllAnnouncements}>
               {showAllAnnouncements ? 'POKAŻ MNIEJ OGŁOSZEŃ' : 'POKAŻ WIĘCEJ OGŁOSZEŃ'}
-              <ChevronDownIcon
-                width={14}
-                height={14}
-                aria-hidden="true"
-                className={`communication-icon ${showAllAnnouncements ? 'communication-chevron--rotated' : ''}`}
-              />
+              <ChevronDownIcon width={14} height={14} aria-hidden="true" className={`communication-icon ${showAllAnnouncements ? 'communication-chevron--rotated' : ''}`} />
             </button>
           </div>
         )}
       </section>
 
+      {}
       <section className="communication-section" aria-labelledby="communication-inbox-title">
         <div className="communication-section__header">
           <h2 id="communication-inbox-title" className="communication-section__title">
@@ -333,55 +275,39 @@ export default function Communication() {
               <div className="communication-icon-tile communication-theme-bg-announcements">
                 <span className="communication-inbox-initials communication-theme-text-announcements">PP</span>
               </div>
-              <span className="communication-badge">3</span>
+              {unreadCount > 0 && (
+                <span className="communication-badge">{unreadCount}</span>
+              )}
             </div>
-
             <div className="communication-card__content">
               <h3 className="communication-card__title">Czat z administracją</h3>
-              <p className="communication-card__desc">
-                Szanowny Panie, informujemy że serwisant został już wezwany...
-              </p>
+              <p className="communication-card__desc">{chatPreview}</p>
             </div>
           </div>
-
           <Button className="communication-btn" onClick={() => navigate('/communication/chat')}>
             Otwórz czat
           </Button>
         </article>
       </section>
 
+      {}
       <section className="communication-section" aria-labelledby="communication-forum-title">
         <div className="communication-section__header">
           <div>
-            <h2 id="communication-forum-title" className="communication-section__title">
-              Forum Mieszkańców
-            </h2>
+            <h2 id="communication-forum-title" className="communication-section__title">Forum Mieszkańców</h2>
             <p className="communication-section__subtitle">Porozmawiaj z sąsiadami</p>
           </div>
-
           <Button className="communication-btn communication-btn--compact" onClick={handleCreatePost}>
             Dodaj wpis
           </Button>
         </div>
 
-        <ul
-          id="communication-forum-list"
-          className="communication-list"
-          aria-label="Lista dyskusji na forum"
-        >
+        <ul id="communication-forum-list" className="communication-list" aria-label="Lista dyskusji na forum">
           {visibleForumThreads.map(({ id, initials, title, meta, tag, replies }) => (
             <li key={id} className="communication-anim-item">
-              <button
-                type="button"
-                className="communication-forum-item"
-                onClick={() => navigate(`/communication/forum/${id}`)}
-                aria-label={`Otwórz dyskusję: ${title}`}
-              >
+              <button type="button" className="communication-forum-item" onClick={() => navigate(`/communication/forum/${id}`)} aria-label={`Otwórz dyskusję: ${title}`}>
                 <div className="communication-card__left">
-                  <div className="communication-avatar" aria-hidden="true">
-                    {initials}
-                  </div>
-
+                  <div className="communication-avatar" aria-hidden="true">{initials}</div>
                   <div className="communication-card__content">
                     <h3 className="communication-card__title communication-card__title--md">{title}</h3>
                     <div className="communication-forum-meta">
@@ -390,7 +316,6 @@ export default function Communication() {
                     </div>
                   </div>
                 </div>
-
                 <div className="communication-forum-stats" aria-hidden="true">
                   <span className="communication-stat">
                     <ChatBubbleIcon width={12} height={12} className="communication-icon" />
@@ -405,30 +330,18 @@ export default function Communication() {
 
         {FORUM_THREADS.length > FORUM_INITIAL && (
           <div className="communication-more">
-            <button
-              type="button"
-              className="communication-more__btn"
-              onClick={handleMoreDiscussions}
-              aria-controls="communication-forum-list"
-              aria-expanded={showAllForum}
-            >
+            <button type="button" className="communication-more__btn" onClick={handleMoreDiscussions} aria-controls="communication-forum-list" aria-expanded={showAllForum}>
               {showAllForum ? 'POKAŻ MNIEJ DYSKUSJI' : 'POKAŻ WIĘCEJ DYSKUSJI'}
-              <ChevronDownIcon
-                width={14}
-                height={14}
-                aria-hidden="true"
-                className={`communication-icon ${showAllForum ? 'communication-chevron--rotated' : ''}`}
-              />
+              <ChevronDownIcon width={14} height={14} aria-hidden="true" className={`communication-icon ${showAllForum ? 'communication-chevron--rotated' : ''}`} />
             </button>
           </div>
         )}
       </section>
 
+      {}
       <section className="communication-section" aria-labelledby="communication-docs-title">
         <div className="communication-section__header">
-          <h2 id="communication-docs-title" className="communication-section__title">
-            Dokumenty i Regulamin
-          </h2>
+          <h2 id="communication-docs-title" className="communication-section__title">Dokumenty i Regulamin</h2>
         </div>
 
         <div className="communication-docs" role="list" aria-label="Lista dokumentów">
@@ -438,25 +351,19 @@ export default function Communication() {
                 <div className="communication-icon-tile communication-icon-tile--radius8 communication-theme-bg-danger-soft">
                   <PdfIcon width={25} height={25} className="communication-icon communication-theme-text-danger" />
                 </div>
-
                 <div className="communication-card__content">
                   <h3 className="communication-doc-title">{title}</h3>
                   <p className="communication-doc-meta">{meta}</p>
                 </div>
               </div>
-
-              <button
-                type="button"
-                className="communication-doc-action"
-                onClick={() => handleDownload(id)}
-                aria-label={`Pobierz dokument: ${title}`}
-              >
+              <button type="button" className="communication-doc-action" onClick={() => handleDownload(id)} aria-label={`Pobierz dokument: ${title}`}>
                 <DownloadIcon width={16} height={16} className="communication-icon" />
               </button>
             </div>
           ))}
         </div>
       </section>
+
     </div>
   );
 }
