@@ -4,6 +4,7 @@ import { ChevronDownIcon, CameraIcon } from '../../components/icons';
 import { Button } from '../../components/buttons';
 import { useAuth } from '../../firebase/AuthContext';
 import '../communication/Communication.css';
+import '../create-post/CreatePost.css';
 
 const TAGS = [
   'Sąsiedzi',

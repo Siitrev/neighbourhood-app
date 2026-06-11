@@ -60,7 +60,7 @@ export default function Finances() {
       setShowBlikModal(true);
       setBlikCode('');
     } else {
-      window.open('https://go.przelewy24.pl/trnRequest/A9E9E1C2D8-DDB1BB-A8540E-4D403B7546', '_blank', 'noopener,noreferrer');
+      window.open('https://www.przelewy24.pl/demo/demo.php', '_blank', 'noopener,noreferrer');
     }
   };
 

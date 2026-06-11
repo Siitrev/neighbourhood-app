@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from '../../components/buttons';
 import { ChatBubbleIcon, FlagIcon, ThumbUpIcon, ShareIcon } from '../../components/icons';
 import { useAuth } from '../../firebase/AuthContext';
 import '../communication/Communication.css';
+import '../forum-thread/ForumThread.css';
 
 const FORUM_THREADS = [
   { id: 'missing-cat-23322', initials: 'AM', title: 'Zaginął kot (MCO) - Blok B', meta: 'Anna M. • 2 godz. temu', tag: 'Zwierzęta', replies: 12, content: 'Drodzy sąsiedzi, dzisiaj rano (ok. godziny 7:00) mój kot, Leon, wymknął się z mieszkania na parterze. Leon jest biało-rudy, ma charakterystyczną plamkę na nosie i zielone oczy. Jest dość płochliwy, ale reaguje na imię.\n\nOstatni raz był widziany przez sąsiada przy placu zabaw między blokiem A i B. Bardzo proszę o kontakt, jeśli ktokolwiek go widział lub wie, gdzie może się chować. Miał na sobie niebieską obrożę z adresatką.' },
@@ -219,9 +220,19 @@ export default function ForumThread() {
     <div className="communication-wrapper forum-thread-wrapper">
       <header className="communication-header">
         <h1 className="communication-title">Forum Mieszkańców</h1>
-        <p className="communication-subtitle" style={{ cursor: 'pointer', transition: 'color 0.15s' }} onClick={() => navigate('/communication')}>
-          Komunikacja &rsaquo; Forum Mieszkańców &rsaquo; Dyskusja #{post.id.slice(-4).toUpperCase()}
-        </p>
+        <nav aria-label="Breadcrumb" className="communication-breadcrumb">
+          <Link to="/communication" className="communication-breadcrumb__link">
+            Komunikacja
+          </Link>
+          <span className="communication-breadcrumb__sep" aria-hidden="true">›</span>
+          <Link to="/communication#communication-forum-title" className="communication-breadcrumb__link">
+            Forum Mieszkańców
+          </Link>
+          <span className="communication-breadcrumb__sep" aria-hidden="true">›</span>
+          <span className="communication-breadcrumb__current">
+            Dyskusja #{post.id.slice(-4).toUpperCase()}
+          </span>
+        </nav>
       </header>
 
       {/* ── Główny post ── */}
