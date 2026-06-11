@@ -35,7 +35,7 @@
 }
 
 .chat-breadcrumb__link {
-  color: var(--primary-blue);
+  color: var(--text-secondary);
   text-decoration: none;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .chat-breadcrumb__current {
-  color: var(--primary-blue);
+  color: var(--text-secondary);;
 }
 
 .chat-window {
