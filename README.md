@@ -377,11 +377,11 @@ W projekcie zaimplementowano:
 
 ## Konfiguracja Firebase Authentication
 
-![Firebase Authentication](./assets/firebase1.png)
+![Firebase Authentication](./assets/screens/firebase1.png)
 
 ## Lista użytkowników Firebase
 
-![Firebase Users](./assets/firebase2.png)
+![Firebase Users](./assets/screens/firebase2.png)
 
 ---
 
